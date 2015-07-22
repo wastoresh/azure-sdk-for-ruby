@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/service/serialization'
+require 'azure/storage/service/serialization'
 
-require 'azure/table/guid'
-require 'azure/table/edmtype'
+require 'azure/storage/table/guid'
+require 'azure/storage/table/edmtype'
 
 require 'time'
 require 'date'

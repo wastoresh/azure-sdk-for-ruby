@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/service/storage_service'
-require 'azure/blob/serialization'
-require 'azure/blob/auth/shared_access_signature'
+require 'azure/storage/service/storage_service'
+require 'azure/storage/blob/serialization'
+require 'azure/storage/blob/auth/shared_access_signature'
 require 'base64'
 
 module Azure

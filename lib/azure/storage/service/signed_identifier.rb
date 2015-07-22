@@ -12,26 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/service/logging'
-require 'azure/service/metrics'
-require 'azure/service/cors'
+require 'azure/storage/service/access_policy'
 
 module Azure
   module Service
-    class StorageServiceProperties
-      def initialize
-        @logging = Logging.new
-        @hour_metrics = Metrics.new
-        @minute_metrics = Metrics.new
-        @cors = Cors.new
+    class SignedIdentifier
+
+      def initialize 
+        @access_policy = AccessPolicy.new
         yield self if block_given?
       end
 
-      attr_accessor :logging
-      attr_accessor :hour_metrics
-      attr_accessor :minute_metrics
-      attr_accessor :cors
-      attr_accessor :default_service_version
+      attr_accessor :id
+      attr_accessor :access_policy
     end
   end
 end

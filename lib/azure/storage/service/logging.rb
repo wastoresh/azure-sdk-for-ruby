@@ -12,25 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require "azure/core/configuration"
+require 'azure/storage/service/retention_policy'
 
 module Azure
-  module Core
-    module Auth
-      class Authorizer
-        # Public: Signs an HTTP request before it's made, by adding the
-        # Authorization header
-        #
-        # request - An Azure::Core::HttpRequest that hasn't been signed
-        # signer  - A signing strategy, such as Azure::Table::Auth::SharedKey
-        #
-        # Returns the modified request
-        def sign(request, signer)
-          signature = signer.sign(request.method, request.uri, request.headers)
-          request.headers['Authorization'] = "#{signer.name} #{signature}"
-          request
-        end
+  module Service
+    class Logging 
+      def initialize
+        @retention_policy = RetentionPolicy.new
+        yield self if block_given?
       end
+
+      attr_accessor :version
+      attr_accessor :delete
+      attr_accessor :read
+      attr_accessor :write
+      attr_accessor :retention_policy
     end
   end
 end

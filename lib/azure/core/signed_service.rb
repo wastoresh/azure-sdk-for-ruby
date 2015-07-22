@@ -14,7 +14,7 @@
 #--------------------------------------------------------------------------
 require 'azure/core/filtered_service'
 require 'azure/core/http/signer_filter'
-require 'azure/core/auth/shared_key'
+require 'azure/storage/auth/shared_key'
 
 module Azure
   module Core

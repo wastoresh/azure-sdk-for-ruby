@@ -50,11 +50,11 @@ module Azure
   end
 
   module Blob
-    autoload :BlobService,                    'azure/blob/blob_service'
-    autoload :Blob,                           'azure/blob/blob'
-    autoload :Block,                          'azure/blob/block'
-    autoload :Container,                      'azure/blob/container'
-    autoload :Serialization,                  'azure/blob/serialization'
+    autoload :BlobService,                    'azure/storage/blob/blob_service'
+    autoload :Blob,                           'azure/storage/blob/blob'
+    autoload :Block,                          'azure/storage/blob/block'
+    autoload :Container,                      'azure/storage/blob/container'
+    autoload :Serialization,                  'azure/storage/blob/serialization'
   end
 
   module CloudServiceManagement
@@ -71,9 +71,9 @@ module Azure
   end
 
   module Queue
-    autoload :QueueService,                   'azure/queue/queue_service'
-    autoload :Message,                        'azure/queue/message'
-    autoload :Queue,                          'azure/queue/queue'
+    autoload :QueueService,                   'azure/storage/queue/queue_service'
+    autoload :Message,                        'azure/storage/queue/message'
+    autoload :Queue,                          'azure/storage/queue/queue'
   end
 
   module ServiceBus
@@ -98,9 +98,9 @@ module Azure
   end
 
   module Table
-    autoload :TableService,             'azure/table/table_service'
-    autoload :Batch,                    'azure/table/batch'
-    autoload :Query,                    'azure/table/query'
+    autoload :TableService,             'azure/storage/table/table_service'
+    autoload :Batch,                    'azure/storage/table/batch'
+    autoload :Query,                    'azure/storage/table/query'
   end
 
   module VirtualMachineImageManagement

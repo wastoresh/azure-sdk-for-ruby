@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/service/serialization'
-require 'azure/service/enumeration_results'
+require 'azure/storage/service/serialization'
+require 'azure/storage/service/enumeration_results'
 
-require 'azure/queue/queue'
-require 'azure/queue/message'
+require 'azure/storage/queue/queue'
+require 'azure/storage/queue/message'
 
 module Azure
   module Queue

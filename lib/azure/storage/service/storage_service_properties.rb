@@ -12,21 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/service/retention_policy'
+require 'azure/storage/service/logging'
+require 'azure/storage/service/metrics'
+require 'azure/storage/service/cors'
 
 module Azure
   module Service
-    class Logging 
+    class StorageServiceProperties
       def initialize
-        @retention_policy = RetentionPolicy.new
+        @logging = Logging.new
+        @hour_metrics = Metrics.new
+        @minute_metrics = Metrics.new
+        @cors = Cors.new
         yield self if block_given?
       end
 
-      attr_accessor :version
-      attr_accessor :delete
-      attr_accessor :read
-      attr_accessor :write
-      attr_accessor :retention_policy
+      attr_accessor :logging
+      attr_accessor :hour_metrics
+      attr_accessor :minute_metrics
+      attr_accessor :cors
+      attr_accessor :default_service_version
     end
   end
 end

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require "azure/core/auth/shared_key"
+require "azure/storage/auth/shared_key"
 
 module Azure
   module Core

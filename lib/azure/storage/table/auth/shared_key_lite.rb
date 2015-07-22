@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/table/auth/shared_key'
+require 'azure/storage/table/auth/shared_key'
 
 module Azure
   module Table

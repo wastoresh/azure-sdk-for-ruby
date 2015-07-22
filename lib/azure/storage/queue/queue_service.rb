@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/service/storage_service'
-require 'azure/queue/serialization'
+require 'azure/storage/service/storage_service'
+require 'azure/storage/queue/serialization'
 
 module Azure
   module Queue

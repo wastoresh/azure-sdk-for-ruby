@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/blob/blob_service"
+require "azure/storage/blob/blob_service"
 
 describe 'Table GB-18030' do
   subject { Azure::Table::TableService.new }
