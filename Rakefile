@@ -22,6 +22,15 @@ Gem::PackageTask.new(gem_spec) do |pkg|
   pkg.need_tar = false
 end
 
+namespace :storage do
+  gem_spec = eval(File.read('./azure_storage.gemspec'))
+  Gem::PackageTask.new(gem_spec) do |pkg|
+    pkg.need_zip = false
+    pkg.need_tar = false
+    pkg.package_dir = 'pkg_azure_storage'
+  end
+end
+
 namespace :test do
   task :require_environment => :dotenv do
     unset_environment = [
@@ -49,19 +58,15 @@ namespace :test do
         t.verbose = true
         t.libs = %w(lib test)
       end
-
-      task component => 'test:require_environment'
     end
 
     component_task :affinity_group
     component_task :base_management
-    component_task :blob
+    component_task :storage
     component_task :cloud_service_management
     component_task :core
     component_task :database
-    component_task :service
     component_task :storage_management
-    component_task :table
     component_task :virtual_machine_image_management
     component_task :virtual_machine_management
     component_task :vnet
@@ -89,13 +94,11 @@ namespace :test do
     end
 
     component_task :affinity_group
-    component_task :blob
+    component_task :storage
     component_task :database
     component_task :location
-    component_task :queue
     component_task :service_bus
     component_task :storage_management
-    component_task :table
     component_task :vm
     component_task :vm_image
     component_task :vnet

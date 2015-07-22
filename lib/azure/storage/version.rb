@@ -12,9 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-source 'https://rubygems.org'
 
-gemspec :name => 'azure'
+module Azure
+  module Storage
+    class Version
+      MAJOR = 0 unless defined? MAJOR
+      MINOR = 1 unless defined? MINOR
+      UPDATE = 0 unless defined? UPDATE
+      PRE = 'pre' unless defined? PRE
 
-# azure_storage and azure has overlap dependencies which should be kept the same.
-gemspec :name => 'azure_storage'
+      class << self
+        # @return [String]
+        def to_s
+          [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
+        end
+      end
+    end
+  end
+end

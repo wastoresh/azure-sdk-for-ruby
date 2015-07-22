@@ -28,3 +28,6 @@ rdoc
 .ruby-version
 .env
 *.pem
+
+# pkg path for sub gems
+pkg_*

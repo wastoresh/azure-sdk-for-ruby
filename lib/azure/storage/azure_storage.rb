@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-source 'https://rubygems.org'
 
-gemspec :name => 'azure'
+require 'rubygems'
+require 'nokogiri'
 
-# azure_storage and azure has overlap dependencies which should be kept the same.
-gemspec :name => 'azure_storage'
+module Azure
+	module Storage
+	end
+end
