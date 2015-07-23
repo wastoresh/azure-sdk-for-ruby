@@ -12,34 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
+module Azure::Storage
+  # Superclass for errors generated from this library, so people can
+  # just rescue this for generic error handling
+  class StorageError < StandardError
+    # attr_reader :description
+    # attr_reader :status_code
+    # attr_reader :type
 
-require 'rubygems'
-require 'nokogiri'
-
-require 'azure_storage/core'
-require 'azure_storage/client'
-
-module Azure
-  module Storage
-    class << self
-
-      def setup(options={})
-        @client = Azure::Storage::Client.new(options)
-      end
-
-      def client
-        @client = Azure::Storage::Client.new unless defined? @client
-        @client
-      end
-
-      private
-
-      def method_missing(method_name, *args, &block)
-        return Azure::Storage::Client.send(method_name, *args, &block) if Azure::Storage::Client.respond_to?(method_name)
-        return @client.send(method_name, *args, &block) if defined? @client && client.respond_to?(method_name)
-        super
-      end
-
-    end
+    # def initialize(description, type, status)
+    #   @type = type
+    #   @status_code = status
+    #   @description = description
+    #   super("#{type} (#{status_code}): #{description}")
+    # end
   end
 end

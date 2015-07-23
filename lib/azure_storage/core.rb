@@ -13,33 +13,12 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 
-require 'rubygems'
-require 'nokogiri'
-
-require 'azure_storage/core'
-require 'azure_storage/client'
-
 module Azure
-  module Storage
-    class << self
-
-      def setup(options={})
-        @client = Azure::Storage::Client.new(options)
-      end
-
-      def client
-        @client = Azure::Storage::Client.new unless defined? @client
-        @client
-      end
-
-      private
-
-      def method_missing(method_name, *args, &block)
-        return Azure::Storage::Client.send(method_name, *args, &block) if Azure::Storage::Client.respond_to?(method_name)
-        return @client.send(method_name, *args, &block) if defined? @client && client.respond_to?(method_name)
-        super
-      end
-
-    end
-  end
+	module Storage
+	end
 end
+
+require 'azure_storage/core/error'
+require 'azure_storage/core/constants'
+require 'azure_storage/core/sr'
+require 'azure/core/utility'
