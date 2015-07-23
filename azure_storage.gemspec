@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Official Ruby client library to consume Azure Storage services'
   s.homepage    = 'http://github.com/azure/azure-sdk-for-ruby/storage'
   s.license     = 'Apache License, Version 2.0'
-  s.files       = `git ls-files ./lib/azure/storage`.split("\n")
+  s.files       = `git ls-files ./lib/azure/storage`.split("\n") + `git ls-files ./lib/azure/core`.split("\n")
   s.require_path = './lib/azure/storage'
 
   s.required_ruby_version = '>= 1.9.3'
