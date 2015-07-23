@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require 'test_helper'
-require 'azure/storage/blob/auth/shared_access_signature'
+require 'azure_storage/blob/auth/shared_access_signature'
 require 'base64'
 require 'uri'
 

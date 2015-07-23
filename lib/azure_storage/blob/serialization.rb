@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/serialization'
-require 'azure/storage/service/enumeration_results'
+require 'azure_storage/service/serialization'
+require 'azure_storage/service/enumeration_results'
 
-require 'azure/storage/blob/container'
-require 'azure/storage/blob/blob'
-require 'azure/storage/blob/block'
+require 'azure_storage/blob/container'
+require 'azure_storage/blob/blob'
+require 'azure_storage/blob/block'
 
 require 'base64'
 

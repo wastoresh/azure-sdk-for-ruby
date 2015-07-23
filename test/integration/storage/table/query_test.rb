@@ -13,8 +13,8 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/table/table_service"
-require "azure/storage/table/query"
+require "azure_storage/table/table_service"
+require "azure_storage/table/query"
 require "azure/core/http/http_error"
 
 describe Azure::Table::TableService do 

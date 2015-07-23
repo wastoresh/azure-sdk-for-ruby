@@ -14,15 +14,15 @@
 #--------------------------------------------------------------------------
 require 'nokogiri'
 
-require 'azure/storage/service/enumeration_results'
-require 'azure/storage/service/signed_identifier'
-require 'azure/storage/service/access_policy'
-require 'azure/storage/service/storage_service_properties'
-require 'azure/storage/service/logging'
-require 'azure/storage/service/metrics'
-require 'azure/storage/service/retention_policy'
-require 'azure/storage/service/cors'
-require 'azure/storage/service/cors_rule'
+require 'azure_storage/service/enumeration_results'
+require 'azure_storage/service/signed_identifier'
+require 'azure_storage/service/access_policy'
+require 'azure_storage/service/storage_service_properties'
+require 'azure_storage/service/logging'
+require 'azure_storage/service/metrics'
+require 'azure_storage/service/retention_policy'
+require 'azure_storage/service/cors'
+require 'azure_storage/service/cors_rule'
 
 module Azure
   module Service

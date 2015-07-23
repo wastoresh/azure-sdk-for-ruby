@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/storage/table/table_service'
-require 'azure/storage/table/edmtype'
+require 'azure_storage/table/table_service'
+require 'azure_storage/table/edmtype'
 
 module Azure
   module Table

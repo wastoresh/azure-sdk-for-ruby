@@ -12,20 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/retention_policy'
+require 'azure_storage/service/retention_policy'
 
 module Azure
   module Service
-    class Logging 
+    class Metrics
       def initialize
         @retention_policy = RetentionPolicy.new
         yield self if block_given?
       end
-
+      
       attr_accessor :version
-      attr_accessor :delete
-      attr_accessor :read
-      attr_accessor :write
+      attr_accessor :enabled
+      attr_accessor :include_apis
       attr_accessor :retention_policy
     end
   end

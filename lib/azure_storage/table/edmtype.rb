@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 
-require 'azure/storage/table/guid'
+require 'azure_storage/table/guid'
 
 require "time"
 require "date"

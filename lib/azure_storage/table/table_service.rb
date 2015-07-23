@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/storage_service'
+require 'azure_storage/service/storage_service'
 
-require 'azure/storage/table/auth/shared_key'
-require 'azure/storage/table/serialization'
-require 'azure/storage/table/entity'
+require 'azure_storage/table/auth/shared_key'
+require 'azure_storage/table/serialization'
+require 'azure_storage/table/entity'
 
 module Azure
   module Table

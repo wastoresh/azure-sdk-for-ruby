@@ -14,9 +14,9 @@
 #--------------------------------------------------------------------------
 require 'uuid'
 
-require 'azure/storage/table/serialization'
-require 'azure/storage/table/table_service'
-require 'azure/storage/table/batch_response'
+require 'azure_storage/table/serialization'
+require 'azure_storage/table/table_service'
+require 'azure_storage/table/batch_response'
 require 'azure/core/http/http_error'
 
 module Azure

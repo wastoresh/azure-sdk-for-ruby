@@ -12,29 +12,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/storage/table/auth/shared_key'
+require "azure_storage/auth/shared_key"
 
 module Azure
-  module Table
+  module Core
     module Auth
       class SharedKeyLite < SharedKey
-        # Public: The name of the strategy.
+        # The name of the strategy.
         #
-        # Returns a String.
+        # @return [String]
         def name
           'SharedKeyLite'
         end
 
         # Generate the string to sign.
         #
-        # verb       - The HTTP request method.
-        # uri        - The URI of the request we're signing.
-        # headers    - A Hash of HTTP request headers.
+        # @param method     [Symbol] The HTTP request method.
+        # @param uri        [URI] The URI of the request we're signing.
+        # @param headers    [Hash] A Hash of HTTP request headers.
         #
         # Returns a plain text string.
         def signable_string(method, uri, headers)
           [
-            headers.fetch('Date') { headers.fetch('x-ms-date') },
+            method.to_s.upcase,
+            headers.fetch('Content-MD5', ''),
+            headers.fetch('Content-Type', ''),
+            headers.fetch('Date') { raise IndexError, 'Headers must include Date' },
+            canonicalized_headers(headers),
             canonicalized_resource(uri)
           ].join("\n")
         end

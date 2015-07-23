@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/queue/queue_service"
+require "azure_storage/queue/queue_service"
 
 describe Azure::Queue::QueueService do
   subject { Azure::Queue::QueueService.new }
