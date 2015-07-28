@@ -13,7 +13,6 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require 'azure_storage/service/serialization'
-require 'azure_storage/service/enumeration_results'
 
 require 'azure_storage/blob/container'
 require 'azure_storage/blob/blob'

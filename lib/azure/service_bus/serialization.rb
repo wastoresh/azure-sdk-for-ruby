@@ -20,7 +20,7 @@ require "azure/service_bus/subscription"
 require "azure/service_bus/rule"
 require "azure/service_bus/relay"
 
-require "azure_storage/service/enumeration_results"
+require "azure/service/enumeration_results"
 
 module Azure
   module ServiceBus

@@ -14,7 +14,7 @@
 #--------------------------------------------------------------------------
 require 'nokogiri'
 
-require 'azure_storage/service/enumeration_results'
+require 'azure/service/enumeration_results'
 require 'azure_storage/service/signed_identifier'
 require 'azure_storage/service/access_policy'
 require 'azure_storage/service/storage_service_properties'

@@ -15,7 +15,6 @@
 require "unit/storage/test_helper"
 require "azure_storage/service/serialization"
 
-require 'azure_storage/service/enumeration_results'
 require 'azure_storage/service/signed_identifier'
 require 'azure_storage/service/access_policy'
 
