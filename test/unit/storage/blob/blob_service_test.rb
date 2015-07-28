@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'test_helper'
+require 'unit/storage/test_helper'
 require 'azure_storage/blob/blob_service'
 require 'azure_storage/blob/serialization'
 require 'azure_storage/blob/container'
@@ -25,8 +25,9 @@ describe Azure::Blob::BlobService do
   let(:serialization) { Azure::Blob::Serialization }
   let(:uri) { URI.parse 'http://foo.com' }
   let(:query) { {} }
-  let(:x_ms_version) {'2014-02-14'}
-  let(:request_headers) { {'x-ms-version' => x_ms_version} }
+  let(:x_ms_version) { Azure::Storage::Default::STG_VERSION }
+  let(:user_agent) { Azure::Storage::Default::USER_AGENT }
+  let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
   let(:request_body) { 'request-body' }
 
   let(:response_headers) { {} }
@@ -160,15 +161,16 @@ describe Azure::Blob::BlobService do
       describe 'when optional metadata parameter is used' do
         let(:container_metadata) {
           {
-              'MetadataKey' => 'MetaDataValue',
-              'MetadataKey1' => 'MetaDataValue1'}
+            'MetadataKey' => 'MetaDataValue',
+          'MetadataKey1' => 'MetaDataValue1'}
         }
 
         before do
           request_headers = {
-              'x-ms-meta-MetadataKey' => 'MetaDataValue',
-              'x-ms-meta-MetadataKey1' => 'MetaDataValue1',
-              'x-ms-version' => x_ms_version
+            'x-ms-meta-MetadataKey' => 'MetaDataValue',
+            'x-ms-meta-MetadataKey1' => 'MetaDataValue1',
+            'x-ms-version' => x_ms_version,
+            'User-Agent' => user_agent
           }
           subject.stubs(:container_uri).with(container_name, {}).returns(uri)
           serialization.stubs(:container_from_headers).with(response_headers).returns(container)
@@ -184,7 +186,7 @@ describe Azure::Blob::BlobService do
         let(:public_access_level) { 'public-access-level-value' }
 
         before {
-          request_headers = {'x-ms-blob-public-access' => public_access_level, 'x-ms-version' => x_ms_version}
+          request_headers = {'x-ms-blob-public-access' => public_access_level, 'x-ms-version' => x_ms_version, 'User-Agent' => user_agent}
 
           subject.stubs(:container_uri).with(container_name, {}).returns(uri)
           serialization.stubs(:container_from_headers).with(response_headers).returns(container)
@@ -442,7 +444,13 @@ describe Azure::Blob::BlobService do
     describe '#set_container_metadata' do
       let(:verb) { :put }
       let(:container_metadata) { {'MetadataKey' => 'MetaDataValue', 'MetadataKey1' => 'MetaDataValue1'} }
-      let(:request_headers) { {'x-ms-meta-MetadataKey' => 'MetaDataValue', 'x-ms-meta-MetadataKey1' => 'MetaDataValue1', 'x-ms-version' => x_ms_version} }
+      let(:request_headers) {
+        {'x-ms-meta-MetadataKey' => 'MetaDataValue',
+         'x-ms-meta-MetadataKey1' => 'MetaDataValue1',
+         'x-ms-version' => x_ms_version,
+         'User-Agent' => user_agent
+         }
+      }
 
       before {
         query.update({'comp' => 'metadata'})
@@ -557,10 +565,10 @@ describe Azure::Blob::BlobService do
           query['include'] = 'metadata,snapshots,uncommittedblobs,copy'
 
           options = {
-              :copy => true,
-              :metadata => true,
-              :snapshots => true,
-              :uncommittedblobs => true
+            :copy => true,
+            :metadata => true,
+            :snapshots => true,
+            :uncommittedblobs => true
           }
 
           subject.list_blobs container_name, options
@@ -588,11 +596,12 @@ describe Azure::Blob::BlobService do
         let(:blob_length) { 37 }
         let(:request_headers) {
           {
-              'x-ms-blob-type' => 'PageBlob',
-              'Content-Length' => 0.to_s,
-              'x-ms-blob-content-length' => blob_length.to_s,
-              'x-ms-sequence-number' => 0.to_s,
-              'x-ms-version' => x_ms_version
+            'x-ms-blob-type' => 'PageBlob',
+            'Content-Length' => 0.to_s,
+            'x-ms-blob-content-length' => blob_length.to_s,
+            'x-ms-sequence-number' => 0.to_s,
+            'x-ms-version' => x_ms_version,
+            'User-Agent' => user_agent
           }
         }
 
@@ -696,10 +705,11 @@ describe Azure::Blob::BlobService do
         let(:query) { {'comp' => 'page'} }
         let(:request_headers) {
           {
-              'x-ms-page-write' => 'update',
-              'x-ms-range' => "bytes=#{start_range}-#{end_range}",
-              'Content-Type' => '',
-              'x-ms-version' => x_ms_version
+            'x-ms-page-write' => 'update',
+            'x-ms-range' => "bytes=#{start_range}-#{end_range}",
+            'Content-Type' => '',
+            'x-ms-version' => x_ms_version,
+            'User-Agent' => user_agent
           }
         }
 
@@ -776,10 +786,11 @@ describe Azure::Blob::BlobService do
         let(:end_range) { 512 }
         let(:request_headers) {
           {
-              'x-ms-range' => "bytes=#{start_range}-#{end_range}",
-              'x-ms-page-write' => 'clear',
-              'Content-Type' => '',
-              'x-ms-version' => x_ms_version
+            'x-ms-range' => "bytes=#{start_range}-#{end_range}",
+            'x-ms-page-write' => 'clear',
+            'Content-Type' => '',
+            'x-ms-version' => x_ms_version,
+            'User-Agent' => user_agent
           }
         }
 
@@ -843,7 +854,7 @@ describe Azure::Blob::BlobService do
         let(:content) { 'some content' }
         let(:block_id) { 'block-id' }
         let(:server_generated_content_md5) { 'server-content-md5' }
-        let(:request_headers) { {'x-ms-version' => x_ms_version} }
+        let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
 
         before {
           query.update({'comp' => 'block', 'blockid' => Base64.strict_encode64(block_id)})
@@ -884,9 +895,10 @@ describe Azure::Blob::BlobService do
         let(:content) { 'some content' }
         let(:request_headers) {
           {
-              'x-ms-blob-type' => 'BlockBlob',
-              'Content-Type' => 'application/octet-stream',
-              'x-ms-version' => x_ms_version
+            'x-ms-blob-type' => 'BlockBlob',
+            'Content-Type' => 'application/octet-stream',
+            'x-ms-version' => x_ms_version,
+            'User-Agent' => user_agent
           }
         }
 
@@ -986,7 +998,7 @@ describe Azure::Blob::BlobService do
         let(:verb) { :put }
         let(:request_body) { 'body' }
         let(:block_list) { mock() }
-        let(:request_headers) { {'x-ms-version' => x_ms_version} }
+        let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
 
         before {
           query.update({'comp' => 'blocklist'})
@@ -1197,7 +1209,7 @@ describe Azure::Blob::BlobService do
 
       describe '#set_blob_properties' do
         let(:verb) { :put }
-        let(:request_headers) { {'x-ms-version' => x_ms_version} }
+        let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
 
         before {
           query.update({'comp' => 'properties'})
@@ -1276,7 +1288,7 @@ describe Azure::Blob::BlobService do
       describe '#set_blob_metadata' do
         let(:verb) { :put }
         let(:blob_metadata) { {'MetadataKey' => 'MetaDataValue', 'MetadataKey1' => 'MetaDataValue1'} }
-        let(:request_headers) { {'x-ms-meta-MetadataKey' => 'MetaDataValue', 'x-ms-meta-MetadataKey1' => 'MetaDataValue1', 'x-ms-version' => x_ms_version} }
+        let(:request_headers) { {'x-ms-meta-MetadataKey' => 'MetaDataValue', 'x-ms-meta-MetadataKey1' => 'MetaDataValue1', 'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
 
         before {
           query.update({'comp' => 'metadata'})

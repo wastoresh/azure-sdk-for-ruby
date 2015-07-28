@@ -28,6 +28,10 @@ module Azure
         super(signer, account_name, options)
       end
 
+      def call(method, uri, body=nil, headers={})
+        super(method, uri, body, service_properties_headers.merge(headers))
+      end
+
 
       # Public: Get Storage Service properties
       #
@@ -37,7 +41,7 @@ module Azure
       # Returns a Hash with the service properties or nil if the operation failed
       def get_service_properties
         uri = service_properties_uri
-        response = call(:get, uri, nil, service_properties_headers)
+        response = call(:get, uri)
         Serialization.service_properties_from_xml response.body
       end
 
@@ -53,7 +57,7 @@ module Azure
         body = Serialization.service_properties_to_xml service_properties
 
         uri = service_properties_uri
-        call(:put, uri, body, service_properties_headers)
+        call(:put, uri, body)
         nil
       end
 
@@ -68,9 +72,9 @@ module Azure
       end
 
       # Adds metadata properties to header hash with required prefix
-      # 
+      #
       # metadata  - A Hash of metadata name/value pairs
-      # headers   - A Hash of HTTP headers 
+      # headers   - A Hash of HTTP headers
       def add_metadata_to_headers(metadata, headers)
         metadata.each do |key, value|
           headers["x-ms-meta-#{key}"] = value
@@ -78,7 +82,10 @@ module Azure
       end
 
       def service_properties_headers
-        {'x-ms-version' => '2014-02-14'}
+        {
+          'x-ms-version' => Azure::Storage::Default::STG_VERSION,
+          'User-Agent' => Azure::Storage::Default::USER_AGENT
+        }
       end
 
     end

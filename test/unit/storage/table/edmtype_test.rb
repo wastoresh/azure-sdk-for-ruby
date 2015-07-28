@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require "test_helper"
+require "unit/storage/test_helper"
 require "azure_storage/table/edmtype"
 
 require "azure_storage/table/guid"

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require "test_helper"
+require "unit/storage/test_helper"
 require "azure_storage/service/serialization"
 
 require 'azure_storage/service/enumeration_results'
