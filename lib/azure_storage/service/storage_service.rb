@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/core/signed_service'
 
-module Azure
+require 'azure/core/signed_service'
+require 'azure_storage/core'
+
+module Azure::Storage
   module Service
     # A base class for StorageService implementations
     class StorageService < Azure::Core::SignedService
@@ -23,7 +25,7 @@ module Azure
       # @param signer         [Azure::Core::Auth::Signer] An implementation of Signer used for signing requests.
       # (optional, Default=Azure::Core::Auth::SharedKey.new)
       # @param account_name   [String] The account name (optional, Default=Azure.config.storage_account_name)
-      # @param options        [Azure::Configurable] the client configuration context
+      # @param options        [Azure::Storage::Configurable] the client configuration context
       def initialize(signer=Core::Auth::SharedKey.new, account_name=nil, options = {})
         super(signer, account_name, options)
       end
@@ -47,7 +49,7 @@ module Azure
 
       # Public: Set Storage Service properties
       #
-      # service_properties - An instance of Azure::Entity::Service::StorageServiceProperties
+      # service_properties - An instance of Azure::Storage::Entity::Service::StorageServiceProperties
       #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452235
       # See http://msdn.microsoft.com/en-us/library/azure/hh452232
@@ -63,7 +65,7 @@ module Azure
 
       # Public: Generate the URI for the service properties
       #
-      # query - see Azure::Services::GetServiceProperties#call documentation.
+      # query - see Azure::Storage::Services::GetServiceProperties#call documentation.
       #
       # Returns a URI.
       def service_properties_uri(query={})

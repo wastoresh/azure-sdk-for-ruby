@@ -20,7 +20,7 @@ require 'azure/core/auth/signer'
 # This will break if used against API version prior to 2013-08-15 as the format
 # changed
 # @see https://msdn.microsoft.com/library/azure/dn140255.aspx for more information on construction
-module Azure
+module Azure::Storage
   module Blob
     module Auth
       class SharedAccessSignature < Azure::Core::Auth::Signer

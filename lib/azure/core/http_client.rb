@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 
-module Azure
+module Azure::Core
   module HttpClient
 
     # Creates a new management request for the current configuration
@@ -27,7 +27,7 @@ module Azure
                 else
                   {body: options_or_body}
                 end
-      BaseManagement::ManagementHttpRequest.new(method, path, {client: self}.merge(options))
+      Azure::BaseManagement::ManagementHttpRequest.new(method, path, {client: self}.merge(options))
     end
 
     # Creates a new management request for the current configuration
@@ -42,7 +42,7 @@ module Azure
                   {body: options_or_body}
                 end
       puts [method, path, options]
-      BaseManagement::SqlManagementHttpRequest.new(method, path, {client: self}.merge(options))
+      Azure::BaseManagement::SqlManagementHttpRequest.new(method, path, {client: self}.merge(options))
     end
 
     # Returns the http agent based on uri

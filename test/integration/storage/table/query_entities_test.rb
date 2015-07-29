@@ -16,9 +16,9 @@ require "integration/test_helper"
 require "azure_storage/table/table_service"
 require "azure/core/http/http_error"
 
-describe Azure::Table::TableService do 
+describe Azure::Storage::Table::TableService do 
   describe "#query_entities" do
-    subject { Azure::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.new }
     let(:table_name){ TableNameHelper.name }
     let(:entities_per_partition){3}
     let(:partitions){ ["part1", "part2", "part3"]}

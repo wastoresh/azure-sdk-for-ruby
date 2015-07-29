@@ -17,9 +17,9 @@ require "azure_storage/table/batch"
 require "azure_storage/table/table_service"
 require "azure/core/http/http_error"
 
-describe Azure::Table::TableService do
+describe Azure::Storage::Table::TableService do
   describe "#delete_entity_batch" do
-    subject { Azure::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.new }
     let(:table_name){ TableNameHelper.name }
 
     let(:entity_properties){ 
@@ -40,7 +40,7 @@ describe Azure::Table::TableService do
     after { TableNameHelper.clean }
 
     it "deletes an entity" do 
-      batch = Azure::Table::Batch.new table_name, entity_properties["PartitionKey"]
+      batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
       batch.delete entity_properties["RowKey"]
       results = subject.execute_batch batch
       results[0].must_be_nil
@@ -54,7 +54,7 @@ describe Azure::Table::TableService do
     it "deletes complex keys" do
       entity = entity_properties.dup
 
-      batch = Azure::Table::Batch.new table_name, entity["PartitionKey"]
+      batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
 
       entity["RowKey"] = "key with spaces"
       subject.insert_entity table_name, entity
@@ -82,7 +82,7 @@ describe Azure::Table::TableService do
 
     it "errors on an invalid table name" do
       assert_raises(Azure::Core::Http::HTTPError) do
-        batch = Azure::Table::Batch.new "this_table.cannot-exist!", entity_properties["PartitionKey"]
+        batch = Azure::Storage::Table::Batch.new "this_table.cannot-exist!", entity_properties["PartitionKey"]
         batch.delete entity_properties["RowKey"]
         subject.execute_batch batch
       end
@@ -90,7 +90,7 @@ describe Azure::Table::TableService do
 
     it "errors on an invalid partition key" do
       assert_raises(Azure::Core::Http::HTTPError) do
-        batch = Azure::Table::Batch.new table_name, "this_partition/key#is_invalid"
+        batch = Azure::Storage::Table::Batch.new table_name, "this_partition/key#is_invalid"
         batch.delete entity_properties["RowKey"]
         subject.execute_batch batch
       end
@@ -98,7 +98,7 @@ describe Azure::Table::TableService do
 
     it "errors on an invalid row key" do
       assert_raises(Azure::Core::Http::HTTPError) do
-        batch = Azure::Table::Batch.new table_name, entity_properties["PartitionKey"]
+        batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
         batch.delete "thisrow/key#is_invalid"
         subject.execute_batch batch
       end

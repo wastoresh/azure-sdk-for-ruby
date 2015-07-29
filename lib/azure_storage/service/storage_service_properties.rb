@@ -16,7 +16,7 @@ require 'azure_storage/service/logging'
 require 'azure_storage/service/metrics'
 require 'azure_storage/service/cors'
 
-module Azure
+module Azure::Storage
   module Service
     class StorageServiceProperties
       def initialize

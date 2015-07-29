@@ -17,7 +17,7 @@ require 'azure_storage/service/serialization'
 require 'azure_storage/queue/queue'
 require 'azure_storage/queue/message'
 
-module Azure
+module Azure::Storage
   module Queue
     module Serialization
       include Service::Serialization

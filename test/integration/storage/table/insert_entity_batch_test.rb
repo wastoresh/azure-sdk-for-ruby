@@ -17,9 +17,9 @@ require "azure_storage/table/batch"
 require "azure_storage/table/table_service"
 require "azure/core/http/http_error"
 
-describe Azure::Table::TableService do
+describe Azure::Storage::Table::TableService do
   describe "#insert_entity_batch" do
-    subject { Azure::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.new }
     let(:table_name){ TableNameHelper.name }
 
     let(:entity_properties) {
@@ -30,7 +30,7 @@ describe Azure::Table::TableService do
         "CustomInt32Property" => 37,
         "CustomInt64Property" => 2**32,
         "CustomInt64NegProperty" => -(2**32),
-        "CustomGUIDProperty" => Azure::Table::GUID.new("81425519-6394-43e4-ac6e-28d91f5c3921"),
+        "CustomGUIDProperty" => Azure::Storage::Table::GUID.new("81425519-6394-43e4-ac6e-28d91f5c3921"),
         "CustomStringProperty" => "CustomPropertyValue",
         "CustomBinaryProperty" => "\x01\x02\x03".force_encoding("BINARY"),
         "CustomDateProperty" => Time.now,
@@ -48,11 +48,11 @@ describe Azure::Table::TableService do
     after { TableNameHelper.clean }
 
     it "creates an entity" do 
-      batch = Azure::Table::Batch.new table_name, entity_properties["PartitionKey"]
+      batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
       batch.insert entity_properties["RowKey"], entity_properties
       results = subject.execute_batch batch
 
-      results[0].must_be_kind_of Azure::Table::Entity
+      results[0].must_be_kind_of Azure::Storage::Table::Entity
       results[0].table.must_equal table_name
       entity_properties.each { |k,v|
         if entity_properties[k].class == Time
@@ -69,7 +69,7 @@ describe Azure::Table::TableService do
 
     it "errors on an invalid table name" do
       assert_raises(Azure::Core::Http::HTTPError) do
-        batch = Azure::Table::Batch.new "this_table.cannot-exist!", entity_properties["PartitionKey"]
+        batch = Azure::Storage::Table::Batch.new "this_table.cannot-exist!", entity_properties["PartitionKey"]
         batch.insert entity_properties["RowKey"], entity_properties
         results = subject.execute_batch batch
       end
@@ -80,7 +80,7 @@ describe Azure::Table::TableService do
         entity = entity_properties.dup
         entity["PartitionKey"] = "this/partition\\key#is?invalid"
 
-        batch = Azure::Table::Batch.new table_name, entity["PartitionKey"]
+        batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.insert entity["RowKey"], entity
         results = subject.execute_batch batch
       end
@@ -91,7 +91,7 @@ describe Azure::Table::TableService do
         entity = entity_properties.dup
         entity["RowKey"] = "this/row\\key#is?invalid"
 
-        batch = Azure::Table::Batch.new table_name, entity["PartitionKey"]
+        batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.insert entity["RowKey"], entity
         results = subject.execute_batch batch
       end

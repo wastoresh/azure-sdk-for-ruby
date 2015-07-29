@@ -14,7 +14,7 @@
 #--------------------------------------------------------------------------
 require 'azure_storage/service/retention_policy'
 
-module Azure
+module Azure::Storage
   module Service
     class Logging 
       def initialize

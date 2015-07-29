@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe Azure::HttpClient do
+describe Azure::Core::HttpClient do
   subject { Azure }
 
   let :uri do

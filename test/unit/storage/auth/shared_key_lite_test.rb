@@ -15,8 +15,8 @@
 require 'test_helper'
 require 'azure_storage/auth/shared_key_lite'
 
-describe Azure::Core::Auth::SharedKeyLite do
-  subject { Azure::Core::Auth::SharedKeyLite.new 'account-name', 'YWNjZXNzLWtleQ==' }
+describe Azure::Storage::Core::Auth::SharedKeyLite do
+  subject { Azure::Storage::Core::Auth::SharedKeyLite.new 'account-name', 'YWNjZXNzLWtleQ==' }
   
   let(:verb) { 'POST' }
   let(:uri) { URI.parse 'http://dummy.uri/resource' }

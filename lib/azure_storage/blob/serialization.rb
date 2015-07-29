@@ -20,10 +20,10 @@ require 'azure_storage/blob/block'
 
 require 'base64'
 
-module Azure
+module Azure::Storage
   module Blob
     module Serialization
-      include Azure::Service::Serialization
+      include Azure::Storage::Service::Serialization
 
       def self.container_enumeration_results_from_xml(xml)
         xml = slopify(xml)

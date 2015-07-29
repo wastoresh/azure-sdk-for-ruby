@@ -16,8 +16,8 @@ require "integration/test_helper"
 require "azure_storage/blob/blob_service"
 require 'base64'
 
-describe Azure::Blob::BlobService do
-  subject { Azure::Blob::BlobService.new }
+describe Azure::Storage::Blob::BlobService do
+  subject { Azure::Storage::Blob::BlobService.new }
   after { TableNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }

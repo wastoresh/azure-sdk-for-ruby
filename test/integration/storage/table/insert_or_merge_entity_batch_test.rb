@@ -17,9 +17,9 @@ require "azure_storage/table/batch"
 require "azure_storage/table/table_service"
 require "azure/core/http/http_error"
 
-describe Azure::Table::TableService do
+describe Azure::Storage::Table::TableService do
   describe "#insert_or_merge_entity_batch" do
-    subject { Azure::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.new }
     let(:table_name){ TableNameHelper.name }
 
     let(:entity_properties){ 
@@ -51,13 +51,13 @@ describe Azure::Table::TableService do
 
       assert does_not_exist
 
-      batch = Azure::Table::Batch.new table_name, entity["PartitionKey"]
+      batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
       batch.insert entity["RowKey"], entity
       result = subject.execute_batch batch
 
       result = subject.get_entity table_name, entity["PartitionKey"], entity["RowKey"]
 
-      result.must_be_kind_of Azure::Table::Entity
+      result.must_be_kind_of Azure::Storage::Table::Entity
       result.table.must_equal table_name
       result.etag.wont_be_nil
       
@@ -74,7 +74,7 @@ describe Azure::Table::TableService do
       entity = entity_properties.dup
       entity["RowKey"] = "abcd1234_existing"
 
-      batch = Azure::Table::Batch.new table_name, entity["PartitionKey"]
+      batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
       batch.insert entity["RowKey"], entity
       subject.execute_batch batch
 
@@ -90,7 +90,7 @@ describe Azure::Table::TableService do
 
       assert exists, "cannot verify existing record"
 
-      batch = Azure::Table::Batch.new table_name, entity["PartitionKey"]
+      batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
       batch.insert_or_merge entity["RowKey"], {
         "PartitionKey" => entity["PartitionKey"],
         "RowKey" => entity["RowKey"],
@@ -105,7 +105,7 @@ describe Azure::Table::TableService do
       result.etag.must_be_kind_of String
       result.etag.wont_equal existing_etag
 
-      result.must_be_kind_of Azure::Table::Entity
+      result.must_be_kind_of Azure::Storage::Table::Entity
       result.table.must_equal table_name
       
       # retained all existing props
@@ -127,7 +127,7 @@ describe Azure::Table::TableService do
         entity = entity_properties.dup
         entity["RowKey"] = "row_key"
 
-        batch = Azure::Table::Batch.new "this_table.cannot-exist!", entity["PartitionKey"]
+        batch = Azure::Storage::Table::Batch.new "this_table.cannot-exist!", entity["PartitionKey"]
         batch.insert entity["RowKey"], entity
         result = subject.execute_batch batch
       end
@@ -139,7 +139,7 @@ describe Azure::Table::TableService do
         entity["PartitionKey"] = "this/partition_key#is?invalid"
         entity["RowKey"] = "row_key"
 
-        batch = Azure::Table::Batch.new table_name, entity["PartitionKey"]
+        batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.insert entity["RowKey"], entity
         result = subject.execute_batch batch
       end
@@ -150,7 +150,7 @@ describe Azure::Table::TableService do
         entity = entity_properties.dup
         entity["RowKey"] = "this/partition_key#is?invalid"
 
-        batch = Azure::Table::Batch.new table_name, entity["PartitionKey"]
+        batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.insert entity["RowKey"], entity
         result = subject.execute_batch batch
       end

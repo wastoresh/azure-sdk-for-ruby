@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 
-require 'azure/http_client'
+require 'azure/core/http_client'
 
 require 'azure_storage/core'
 require 'azure_storage/core/client_options'
@@ -26,7 +26,7 @@ require 'azure_storage/queue/queue_service'
 module Azure::Storage
   class Client
     include Azure::Storage::ClientOptions
-    include Azure::HttpClient
+    include Azure::Core::HttpClient
 
     # Public: Creates an instance of [Azure::Storage::Client]
     #
@@ -74,19 +74,19 @@ module Azure::Storage
     # Azure Blob service configured from this Azure Storage client instance
     # @return [Azure::Storage::Blob::BlobService]
     def blobs(options = {})
-      @blobs ||= Azure::Blob::BlobService.new(default_client(options))
+      @blobs ||= Azure::Storage::Blob::BlobService.new(default_client(options))
     end
 
     # Azure Queue service configured from this Azure Storage client instance
     # @return [Azure::Storage::Queue::QueueService]
     def queues(options = {})
-      @queues ||= Azure::Queue::QueueService.new(default_client(options))
+      @queues ||= Azure::Storage::Queue::QueueService.new(default_client(options))
     end
 
     # Azure Table service configured from this Azure Storage client instance
     # @return [Azure::Storage::Table::TableService]
     def tables(options = {})
-      @tables ||= Azure::Table::TableService.new(default_client(options))
+      @tables ||= Azure::Storage::Table::TableService.new(default_client(options))
     end
 
     class << self

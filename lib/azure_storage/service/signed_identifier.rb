@@ -14,7 +14,7 @@
 #--------------------------------------------------------------------------
 require 'azure_storage/service/access_policy'
 
-module Azure
+module Azure::Storage
   module Service
     class SignedIdentifier
 

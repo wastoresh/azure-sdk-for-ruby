@@ -18,7 +18,7 @@ require 'azure_storage/table/guid'
 require "time"
 require "date"
 
-module Azure
+module Azure::Storage
   module Table
     module EdmType
       # Public: Get the Edm type of an object

@@ -16,9 +16,9 @@ require "integration/test_helper"
 require "azure_storage/table/table_service"
 require "azure/core/http/http_error"
 
-describe Azure::Table::TableService do
+describe Azure::Storage::Table::TableService do
   describe "#update_entity" do
-    subject { Azure::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.new }
     let(:table_name){ TableNameHelper.name }
 
     let(:entity_properties){ 
@@ -62,7 +62,7 @@ describe Azure::Table::TableService do
 
       result = subject.get_entity table_name, entity_properties["PartitionKey"], entity_properties["RowKey"]
       
-      result.must_be_kind_of Azure::Table::Entity
+      result.must_be_kind_of Azure::Storage::Table::Entity
       result.table.must_equal table_name
 
       # removed all existing props
@@ -86,7 +86,7 @@ describe Azure::Table::TableService do
 
       result = subject.get_entity table_name, entity_properties["PartitionKey"], entity_properties["RowKey"]
       
-      result.must_be_kind_of Azure::Table::Entity
+      result.must_be_kind_of Azure::Storage::Table::Entity
       result.table.must_equal table_name
 
       # removed all existing props

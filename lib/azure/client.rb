@@ -16,7 +16,7 @@
 module Azure
   class Client
     include Azure::Configurable
-    include Azure::HttpClient
+    include Azure::Core::HttpClient
     include Azure::ClientServices
 
     def initialize(options = {})

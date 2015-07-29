@@ -14,7 +14,7 @@
 #--------------------------------------------------------------------------
 require "azure_storage/auth/shared_key"
 
-module Azure
+module Azure::Storage
   module Core
     module Auth
       class SharedKeyLite < SharedKey

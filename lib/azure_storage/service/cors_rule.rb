@@ -1,4 +1,4 @@
-module Azure
+module Azure::Storage
   module Service
     class CorsRule
       def initialize

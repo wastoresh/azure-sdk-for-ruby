@@ -15,7 +15,7 @@
 require 'azure_storage/table/table_service'
 require 'azure_storage/table/edmtype'
 
-module Azure
+module Azure::Storage
   module Table
     class Query
       def initialize(table="", partition=nil, row=nil, &block)
@@ -25,7 +25,7 @@ module Azure
         @fields = []
         @filters = []
         @top_n = nil
-        @table_service = Azure::Table::TableService.new
+        @table_service = Azure::Storage::Table::TableService.new
         self.instance_eval(&block) if block_given?
       end
         
@@ -100,7 +100,7 @@ module Azure
         result = ""
         clauses = []
         filters.each { |f|
-          clauses.push "#{f[0].to_s} #{f[1].to_s} #{Azure::Table::EdmType.serialize_query_value(f[2])}"
+          clauses.push "#{f[0].to_s} #{f[1].to_s} #{Azure::Storage::Table::EdmType.serialize_query_value(f[2])}"
         }
         return nil if clauses.length == 0 
         

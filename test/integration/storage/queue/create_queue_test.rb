@@ -16,8 +16,8 @@ require "integration/test_helper"
 require "azure_storage/queue/queue_service"
 require "azure/core/http/http_error"
 
-describe Azure::Queue::QueueService do
-  subject { Azure::Queue::QueueService.new }
+describe Azure::Storage::Queue::QueueService do
+  subject { Azure::Storage::Queue::QueueService.new }
   
   describe '#create_queue' do
     let(:queue_name){ QueueNameHelper.name }

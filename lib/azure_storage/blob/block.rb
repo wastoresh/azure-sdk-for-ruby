@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-module Azure
+module Azure::Storage
   module Blob
     # Represents a Block as part of a BlockList 
     # The type should be one of :uncommitted, :committed or :latest

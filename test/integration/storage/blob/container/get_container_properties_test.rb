@@ -15,8 +15,8 @@
 require "integration/test_helper"
 require "azure_storage/blob/blob_service"
 
-describe Azure::Blob::BlobService do
-  subject { Azure::Blob::BlobService.new }
+describe Azure::Storage::Blob::BlobService do
+  subject { Azure::Storage::Blob::BlobService.new }
   after { TableNameHelper.clean }
   
   describe '#get_container_properties' do

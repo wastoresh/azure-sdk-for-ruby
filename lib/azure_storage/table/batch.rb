@@ -19,7 +19,7 @@ require 'azure_storage/table/table_service'
 require 'azure_storage/table/batch_response'
 require 'azure/core/http/http_error'
 
-module Azure
+module Azure::Storage
   module Table
     # Represents a batch of table operations.
     # 
@@ -53,7 +53,7 @@ module Azure
         @partition = partition
         @operations = []
         @entity_keys = []
-        @table_service = Azure::Table::TableService.new
+        @table_service = Azure::Storage::Table::TableService.new
         uuid = UUID.new
         @batch_id = "batch_" + uuid.generate
         @changeset_id = "changeset_" + uuid.generate
@@ -133,9 +133,9 @@ module Azure
             case operation[:method]
             when :post
               # entity from body
-              result = Azure::Table::Serialization.hash_from_entry_xml(response[:body])
+              result = Azure::Storage::Table::Serialization.hash_from_entry_xml(response[:body])
 
-              entity = Azure::Table::Entity.new
+              entity = Azure::Storage::Table::Entity.new
               entity.table = table
               entity.updated = result[:updated]
               entity.etag = response[:headers]["etag"] || result[:etag]
@@ -206,7 +206,7 @@ module Azure
       def insert(row_key, entity_values)
         check_entity_key(row_key)
 
-        body = Azure::Table::Serialization.hash_to_entry_xml({ 
+        body = Azure::Storage::Table::Serialization.hash_to_entry_xml({ 
             "PartitionKey" => partition, 
             "RowKey" => row_key
           }.merge(entity_values) ).to_xml
@@ -241,7 +241,7 @@ module Azure
         headers = {}
         headers["If-Match"] = options[:if_match] || "*" unless options[:create_if_not_exists]
 
-        body = Azure::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
+        body = Azure::Storage::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
 
         add_operation(:put, uri, body, headers)
         self
@@ -273,7 +273,7 @@ module Azure
         headers = {}
         headers["If-Match"] = options[:if_match] || "*" unless options[:create_if_not_exists]
 
-        body = Azure::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
+        body = Azure::Storage::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
 
         add_operation(:merge, uri, body, headers)
         self

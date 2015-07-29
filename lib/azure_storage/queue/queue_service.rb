@@ -15,7 +15,7 @@
 require 'azure_storage/service/storage_service'
 require 'azure_storage/queue/serialization'
 
-module Azure
+module Azure::Storage
   module Queue
     class QueueService < Service::StorageService
 
@@ -237,7 +237,7 @@ module Azure
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159101
       #
-      # Returns a list of Azure::Entity::SignedIdentifier instances
+      # Returns a list of Azure::Storage::Entity::SignedIdentifier instances
       def get_queue_acl(queue_name, options={})
         query = { "comp" => "acl" }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
@@ -259,7 +259,7 @@ module Azure
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:signed_identifiers+  - Array. A list of Azure::Entity::SignedIdentifier instances 
+      # * +:signed_identifiers+  - Array. A list of Azure::Storage::Entity::SignedIdentifier instances 
       # * +:timeout+             - Integer. A timeout in seconds.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/jj159099
@@ -399,7 +399,7 @@ module Azure
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179472
       #
-      # Returns a list of Azure::Entity::Queue::Message instances
+      # Returns a list of Azure::Storage::Entity::Queue::Message instances
       def peek_messages(queue_name, options={})
         number_of_messages=1
         number_of_messages = options[:number_of_messages] if options[:number_of_messages]
@@ -431,7 +431,7 @@ module Azure
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179474
       #
-      # Returns a list of Azure::Entity::Queue::Message instances
+      # Returns a list of Azure::Storage::Entity::Queue::Message instances
       def list_messages(queue_name, visibility_timeout, options={})
         number_of_messages=1
         number_of_messages = options[:number_of_messages] if options[:number_of_messages]
@@ -567,4 +567,4 @@ module Azure
   end
 end
 
-Azure::QueueService = Azure::Queue::QueueService
+Azure::Storage::QueueService = Azure::Storage::Queue::QueueService

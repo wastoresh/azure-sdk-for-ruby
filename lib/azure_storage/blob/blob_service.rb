@@ -17,13 +17,13 @@ require 'azure_storage/blob/serialization'
 require 'azure_storage/blob/auth/shared_access_signature'
 require 'base64'
 
-module Azure
+module Azure::Storage
   module Blob
     class BlobService < Service::StorageService
 
       def initialize(options = {})
         client_config = options[:client] || Azure
-        signer = options[:signer] || Azure::Core::Auth::SharedKey.new(client_config.storage_account_name,
+        signer = options[:signer] || Azure::Storage::Core::Auth::SharedKey.new(client_config.storage_account_name,
                                                                       client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options)
         @host = client.storage_blob_host
@@ -215,8 +215,8 @@ module Azure
       # See http://msdn.microsoft.com/en-us/library/azure/dd179469.aspx
       #
       # Returns a tuple of (container, signed_identifiers)
-      #   container           - A Azure::Entity::Blob::Container instance
-      #   signed_identifiers  - A list of Azure::Entity::SignedIdentifier instances
+      #   container           - A Azure::Storage::Entity::Blob::Container instance
+      #   signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instances
       #
       def get_container_acl(name, options={})
         query = { 'comp' => 'acl'}
@@ -243,14 +243,14 @@ module Azure
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:signed_identifiers+          - Array. A list of Azure::Entity::SignedIdentifier instances (optional)
+      # * +:signed_identifiers+          - Array. A list of Azure::Storage::Entity::SignedIdentifier instances (optional)
       # * +:timeout+                     - Integer. A timeout in seconds.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/dd179391.aspx
       #
       # Returns a tuple of (container, signed_identifiers)
-      # * +container+           - A Azure::Entity::Blob::Container instance
-      # * +signed_identifiers+  - A list of Azure::Entity::SignedIdentifier instances
+      # * +container+           - A Azure::Storage::Entity::Blob::Container instance
+      # * +signed_identifiers+  - A list of Azure::Storage::Entity::SignedIdentifier instances
       #
       def set_container_acl(name, public_access_level, options={})
         query = { 'comp' => 'acl'}
@@ -740,7 +740,7 @@ module Azure
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179400.aspx
       #
-      # Returns a list of Azure::Entity::Blob::Block instances
+      # Returns a list of Azure::Storage::Entity::Blob::Block instances
       def list_blob_blocks(container, blob, options={})
 
         options[:blocklist_type] = options[:blocklist_type] || :all
@@ -1366,7 +1366,7 @@ module Azure
         response.headers['x-ms-lease-time'].to_i
       end
 
-      def call(method, uri, body=nil, headers=nil)
+      def call(method, uri, body=nil, headers={})
         # Force the request.body to the content encoding of specified in the header
         # (content encoding probably shouldn't be used this way)
         if headers && !body.nil?
@@ -1449,4 +1449,4 @@ module Azure
   end
 end
 
-Azure::BlobService = Azure::Blob::BlobService
+Azure::Storage::BlobService = Azure::Storage::Blob::BlobService

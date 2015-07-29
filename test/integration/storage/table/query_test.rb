@@ -17,9 +17,9 @@ require "azure_storage/table/table_service"
 require "azure_storage/table/query"
 require "azure/core/http/http_error"
 
-describe Azure::Table::TableService do 
+describe Azure::Storage::Table::TableService do 
   describe "#query_entities" do
-    subject { Azure::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.new }
     let(:table_name){ TableNameHelper.name }
     let(:entities_per_partition){3}
     let(:partitions){ ["part1", "part2", "part3"]}
@@ -58,7 +58,7 @@ describe Azure::Table::TableService do
     after { TableNameHelper.clean }
 
     it "Queries a table for list of entities" do
-      q = Azure::Table::Query.new.from table_name
+      q = Azure::Storage::Table::Query.new.from table_name
 
       result = q.execute
       result.must_be_kind_of Array 
@@ -80,7 +80,7 @@ describe Azure::Table::TableService do
       partition = partitions[0]
       row_key = entities[partition][0]
 
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .partition(partition)
         .row(row_key)
@@ -104,7 +104,7 @@ describe Azure::Table::TableService do
     it "can project a subset of properties, populating sparse properties with nil" do
       projection = ['CustomIntegerProperty', 'ThisPropertyDoesNotExist']
 
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .select(projection[0])
         .select(projection[1])
@@ -129,7 +129,7 @@ describe Azure::Table::TableService do
         "CustomBooleanProperty"=> false
       })
 
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .where("CustomIntegerProperty gt #{entity_properties['CustomIntegerProperty']}")
         .where("CustomBooleanProperty eq false")
@@ -139,7 +139,7 @@ describe Azure::Table::TableService do
       result.length.must_equal 1
       result.first.properties["PartitionKey"].must_equal "filter-test-partition"
 
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .where("CustomIntegerProperty gt #{entity_properties['CustomIntegerProperty']}")
         .where("CustomBooleanProperty eq true")
@@ -149,7 +149,7 @@ describe Azure::Table::TableService do
     end
 
     it "can limit the result set using the top parameter" do
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .top(3)
 
@@ -160,7 +160,7 @@ describe Azure::Table::TableService do
     end
 
     it "can page results using the top parameter and continuation_token" do
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .top(3)
 
@@ -169,7 +169,7 @@ describe Azure::Table::TableService do
       result.length.must_equal 3
       result.continuation_token.wont_be_nil
 
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .top(3)
         .next_row(result.continuation_token[:next_row_key])
@@ -180,7 +180,7 @@ describe Azure::Table::TableService do
       result2.length.must_equal 3
       result2.continuation_token.wont_be_nil
 
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .top(3)
         .next_row(result2.continuation_token[:next_row_key])
@@ -191,7 +191,7 @@ describe Azure::Table::TableService do
       result3.length.must_equal 3
       result3.continuation_token.wont_be_nil
 
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .top(3)
         .next_row(result3.continuation_token[:next_row_key])
@@ -212,7 +212,7 @@ describe Azure::Table::TableService do
       })
 
 
-      q = Azure::Table::Query.new
+      q = Azure::Storage::Table::Query.new
         .from(table_name)
         .select("PartitionKey")
         .select("CustomIntegerProperty")

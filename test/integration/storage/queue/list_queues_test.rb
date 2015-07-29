@@ -15,8 +15,8 @@
 require "integration/test_helper"
 require "azure_storage/queue/queue_service"
 
-describe Azure::Queue::QueueService do
-  subject { Azure::Queue::QueueService.new }
+describe Azure::Storage::Queue::QueueService do
+  subject { Azure::Storage::Queue::QueueService.new }
 
   describe '#list_queues' do
     let(:queue_names){ [QueueNameHelper.name, QueueNameHelper.name] }

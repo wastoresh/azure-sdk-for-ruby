@@ -19,7 +19,7 @@ describe Azure::StorageManagementService do
   util = Class.new.extend(Azure::Core::Utility)
   subject { Azure::StorageManagementService.new }
   affinity_name = util.random_string('affinity-group-', 10)
-  Azure::BaseManagementService.new.create_affinity_group(
+  Azure::Storage::BaseManagementService.new.create_affinity_group(
     affinity_name,
     'West US',
     'Label Name'
@@ -39,7 +39,7 @@ describe Azure::StorageManagementService do
   let(:options) { { description: 'sample description' } }
 
   before do
-    Azure::Loggerx.expects(:puts).returns(nil).at_least(0)
+    Azure::Storage::Loggerx.expects(:puts).returns(nil).at_least(0)
   end
 
   it 'list storage accounts' do

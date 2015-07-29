@@ -16,9 +16,9 @@ require "integration/test_helper"
 require "azure_storage/blob/blob_service"
 require "azure/core/http/http_error"
 
-describe Azure::Blob::BlobService do
+describe Azure::Storage::Blob::BlobService do
   describe "#informative_errors_blob" do
-    subject { Azure::Blob::BlobService.new }
+    subject { Azure::Storage::Blob::BlobService.new }
     after { TableNameHelper.clean }
     let(:container_name) { ContainerNameHelper.name }
 

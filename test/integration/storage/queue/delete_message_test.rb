@@ -15,8 +15,8 @@
 require "integration/test_helper"
 require "azure_storage/queue/queue_service"
 
-describe Azure::Queue::QueueService do
-  subject { Azure::Queue::QueueService.new }
+describe Azure::Storage::Queue::QueueService do
+  subject { Azure::Storage::Queue::QueueService.new }
   
   describe '#delete_message' do
     let(:queue_name){ QueueNameHelper.name }

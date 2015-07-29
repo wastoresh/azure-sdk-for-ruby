@@ -19,10 +19,10 @@ require 'azure_storage/blob/container'
 require 'azure_storage/blob/blob'
 require 'azure_storage/service/signed_identifier'
 
-describe Azure::Blob::BlobService do
+describe Azure::Storage::Blob::BlobService do
 
-  subject { Azure::Blob::BlobService.new }
-  let(:serialization) { Azure::Blob::Serialization }
+  subject { Azure::Storage::Blob::BlobService.new }
+  let(:serialization) { Azure::Storage::Blob::Serialization }
   let(:uri) { URI.parse 'http://foo.com' }
   let(:query) { {} }
   let(:x_ms_version) { Azure::Storage::Default::STG_VERSION }
@@ -125,7 +125,7 @@ describe Azure::Blob::BlobService do
 
   describe 'container functions' do
     let(:container_name) { 'container-name' }
-    let(:container) { Azure::Blob::Container.new }
+    let(:container) { Azure::Storage::Blob::Container.new }
 
     describe '#create_container' do
 
@@ -154,7 +154,7 @@ describe Azure::Blob::BlobService do
       it 'returns a new container' do
         result = subject.create_container container_name
 
-        result.must_be_kind_of Azure::Blob::Container
+        result.must_be_kind_of Azure::Storage::Blob::Container
         result.name.must_equal container_name
       end
 
@@ -252,7 +252,7 @@ describe Azure::Blob::BlobService do
 
       it "returns a container, with it's properties attribute populated" do
         result = subject.get_container_properties container_name
-        result.must_be_kind_of Azure::Blob::Container
+        result.must_be_kind_of Azure::Storage::Blob::Container
         result.name.must_equal container_name
         result.properties.must_equal container_properties
       end
@@ -290,7 +290,7 @@ describe Azure::Blob::BlobService do
 
       it "returns a container, with it's metadata attribute populated" do
         result = subject.get_container_metadata container_name
-        result.must_be_kind_of Azure::Blob::Container
+        result.must_be_kind_of Azure::Storage::Blob::Container
         result.name.must_equal container_name
         result.metadata.must_equal container_metadata
       end
@@ -298,7 +298,7 @@ describe Azure::Blob::BlobService do
 
     describe '#get_container_acl' do
       let(:verb) { :get }
-      let(:signed_identifier) { Azure::Service::SignedIdentifier.new }
+      let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
       let(:signed_identifiers) { [signed_identifier] }
 
       before {
@@ -331,11 +331,11 @@ describe Azure::Blob::BlobService do
       it 'returns a container and an ACL' do
         returned_container, returned_acl = subject.get_container_acl container_name
 
-        returned_container.must_be_kind_of Azure::Blob::Container
+        returned_container.must_be_kind_of Azure::Storage::Blob::Container
         returned_container.name.must_equal container_name
 
         returned_acl.must_be_kind_of Array
-        returned_acl[0].must_be_kind_of Azure::Service::SignedIdentifier
+        returned_acl[0].must_be_kind_of Azure::Storage::Service::SignedIdentifier
       end
     end
 
@@ -372,7 +372,7 @@ describe Azure::Blob::BlobService do
       it 'returns a container and an ACL' do
         returned_container, returned_acl = subject.set_container_acl container_name, public_access_level
 
-        returned_container.must_be_kind_of Azure::Blob::Container
+        returned_container.must_be_kind_of Azure::Storage::Blob::Container
         returned_container.name.must_equal container_name
         returned_container.public_access_level.must_equal public_access_level
 
@@ -391,7 +391,7 @@ describe Azure::Blob::BlobService do
         end
 
         describe 'when a signed_identifiers value is provided' do
-          let(:signed_identifier) { Azure::Service::SignedIdentifier.new }
+          let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
           let(:signed_identifiers) { [signed_identifier] }
           before {
             subject.stubs(:call).with(verb, uri, request_body, request_headers).returns(response)
@@ -406,12 +406,12 @@ describe Azure::Blob::BlobService do
           it 'returns a container and an ACL' do
             returned_container, returned_acl = subject.set_container_acl container_name, public_access_level, {:signed_identifiers => signed_identifiers}
 
-            returned_container.must_be_kind_of Azure::Blob::Container
+            returned_container.must_be_kind_of Azure::Storage::Blob::Container
             returned_container.name.must_equal container_name
             returned_container.public_access_level.must_equal public_access_level
 
             returned_acl.must_be_kind_of Array
-            returned_acl[0].must_be_kind_of Azure::Service::SignedIdentifier
+            returned_acl[0].must_be_kind_of Azure::Storage::Service::SignedIdentifier
           end
         end
       end
@@ -589,7 +589,7 @@ describe Azure::Blob::BlobService do
 
     describe 'blob functions' do
       let(:blob_name) { 'blob-name' }
-      let(:blob) { Azure::Blob::Blob.new }
+      let(:blob) { Azure::Storage::Blob::Blob.new }
 
       describe '#create_page_blob' do
         let(:verb) { :put }
@@ -623,7 +623,7 @@ describe Azure::Blob::BlobService do
 
         it 'returns a Blob on success' do
           result = subject.create_page_blob container_name, blob_name, blob_length
-          result.must_be_kind_of Azure::Blob::Blob
+          result.must_be_kind_of Azure::Storage::Blob::Blob
           result.must_equal blob
           result.name.must_equal blob_name
         end
@@ -731,7 +731,7 @@ describe Azure::Blob::BlobService do
 
         it 'returns a Blob on success' do
           result = subject.create_blob_pages container_name, blob_name, start_range, end_range, content
-          result.must_be_kind_of Azure::Blob::Blob
+          result.must_be_kind_of Azure::Storage::Blob::Blob
           result.must_equal blob
           result.name.must_equal blob_name
         end
@@ -812,7 +812,7 @@ describe Azure::Blob::BlobService do
 
         it 'returns a Blob on success' do
           result = subject.clear_blob_pages container_name, blob_name, start_range, end_range
-          result.must_be_kind_of Azure::Blob::Blob
+          result.must_be_kind_of Azure::Storage::Blob::Blob
           result.must_equal blob
           result.name.must_equal blob_name
         end
@@ -920,7 +920,7 @@ describe Azure::Blob::BlobService do
 
         it 'returns a Blob on success' do
           result = subject.create_block_blob container_name, blob_name, content
-          result.must_be_kind_of Azure::Blob::Blob
+          result.must_be_kind_of Azure::Storage::Blob::Blob
           result.must_equal blob
           result.name.must_equal blob_name
         end
@@ -1080,7 +1080,7 @@ describe Azure::Blob::BlobService do
       describe '#list_blob_blocks' do
         let(:verb) { :get }
         let(:query) { {'comp' => 'blocklist', 'blocklisttype' => 'all'} }
-        let(:blob_block_list) { [Azure::Blob::Block.new] }
+        let(:blob_block_list) { [Azure::Storage::Blob::Block.new] }
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
@@ -1106,7 +1106,7 @@ describe Azure::Blob::BlobService do
         it 'returns a list of containers for the account' do
           result = subject.list_blob_blocks container_name, blob_name
           result.must_be_kind_of Array
-          result.first.must_be_kind_of Azure::Blob::Block
+          result.first.must_be_kind_of Azure::Storage::Blob::Block
         end
 
         describe 'when blocklist_type is provided' do
@@ -1335,7 +1335,7 @@ describe Azure::Blob::BlobService do
         it 'returns the blob on success' do
           result = subject.get_blob_properties container_name, blob_name
 
-          result.must_be_kind_of Azure::Blob::Blob
+          result.must_be_kind_of Azure::Storage::Blob::Blob
           result.must_equal blob
           result.name.must_equal blob_name
         end
@@ -1380,7 +1380,7 @@ describe Azure::Blob::BlobService do
         it 'returns the blob on success' do
           result = subject.get_blob_metadata container_name, blob_name
 
-          result.must_be_kind_of Azure::Blob::Blob
+          result.must_be_kind_of Azure::Storage::Blob::Blob
           result.must_equal blob
           result.name.must_equal blob_name
         end
@@ -1429,7 +1429,7 @@ describe Azure::Blob::BlobService do
         it 'returns the blob and blob contents on success' do
           returned_blob, returned_blob_contents = subject.get_blob container_name, blob_name
 
-          returned_blob.must_be_kind_of Azure::Blob::Blob
+          returned_blob.must_be_kind_of Azure::Storage::Blob::Blob
           returned_blob.must_equal blob
 
           returned_blob_contents.must_equal response_body
@@ -1900,7 +1900,7 @@ describe Azure::Blob::BlobService do
     end
   end
 
-  class MockBlobService < Azure::Blob::BlobService
+  class MockBlobService < Azure::Storage::Blob::BlobService
     def containers_uri(query={})
       super
     end

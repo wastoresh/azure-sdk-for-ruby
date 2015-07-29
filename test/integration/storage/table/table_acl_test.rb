@@ -16,14 +16,14 @@ require 'integration/test_helper'
 require 'azure_storage/table/table_service'
 require 'azure/core/http/http_error'
 
-describe Azure::Table::TableService do 
+describe Azure::Storage::Table::TableService do 
   describe '#get/set_acl' do
-    subject { Azure::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.new }
     let(:table_name){ TableNameHelper.name }
     let(:signed_identifier) { 
-      identifier = Azure::Service::SignedIdentifier.new 
+      identifier = Azure::Storage::Service::SignedIdentifier.new 
       identifier.id = 'MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI='
-      identifier.access_policy = Azure::Service::AccessPolicy.new
+      identifier.access_policy = Azure::Storage::Service::AccessPolicy.new
       identifier.access_policy.start = '2009-09-28T08:49:37.0000000Z'
       identifier.access_policy.expiry = '2009-09-29T08:49:37.0000000Z'
       identifier.access_policy.permission = 'raud'
@@ -42,7 +42,7 @@ describe Azure::Table::TableService do
       result.must_be_kind_of Array
 
       result.wont_be_empty
-      result.last.must_be_kind_of Azure::Service::SignedIdentifier
+      result.last.must_be_kind_of Azure::Storage::Service::SignedIdentifier
       result.last.id.must_equal signed_identifier.id
       result.last.access_policy.start.must_equal signed_identifier.access_policy.start
       result.last.access_policy.expiry.must_equal signed_identifier.access_policy.expiry

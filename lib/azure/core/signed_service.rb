@@ -28,7 +28,7 @@ module Azure
       # @param options        [Hash] options
       def initialize(signer=nil, account_name=nil, options={})
         super('', options)
-        signer ||= Core::Auth::SharedKey.new(client.storage_account_name, client.storage_access_key)
+        signer ||= Azure::Storage::Core::Auth::SharedKey.new(client.storage_account_name, client.storage_access_key)
         @account_name = account_name || client.storage_account_name
         @signer = signer
         filters.unshift Core::Http::SignerFilter.new(signer) if signer

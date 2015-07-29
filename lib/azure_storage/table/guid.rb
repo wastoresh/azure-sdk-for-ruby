@@ -14,7 +14,7 @@
 #--------------------------------------------------------------------------
 require "delegate"
 
-module Azure
+module Azure::Storage
   module Table
     # Public: Wrapper around a string to represent a GUID
     #

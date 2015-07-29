@@ -20,10 +20,10 @@ require 'azure_storage/table/edmtype'
 require 'time'
 require 'date'
 
-module Azure
+module Azure::Storage
   module Table
     module Serialization
-      include Azure::Service::Serialization
+      include Azure::Storage::Service::Serialization
 
       def self.hash_to_entry_xml(hash, id=nil, xml=Nokogiri::XML::Builder.new(:encoding => 'UTF-8'))
         entry_namespaces = {
@@ -52,7 +52,7 @@ module Azure
               key = key.encode('UTF-8') if key.is_a? String and !key.encoding.names.include?('BINARY')
               val = val.encode('UTF-8') if val.is_a? String and !val.encoding.names.include?('BINARY')
 
-              type = Azure::Table::EdmType.property_type(val)
+              type = Azure::Storage::Table::EdmType.property_type(val)
               attributes = {}
               attributes['m:type'] = type unless type.nil? || type.empty?
 
@@ -60,7 +60,7 @@ module Azure
                 attributes['m:null'] = 'true'
                 properties.send("d:#{key}", attributes)
               else
-                properties.send("d:#{key}", Azure::Table::EdmType.serialize_value(type, val), attributes)
+                properties.send("d:#{key}", Azure::Storage::Table::EdmType.serialize_value(type, val), attributes)
               end
             end
           end
@@ -97,7 +97,7 @@ module Azure
         properties = {} 
         if (xml > 'content').any?
           (xml > 'content').first.first_element_child.element_children.each do |prop|
-            properties[prop.name] = prop.text != '' ? Azure::Table::EdmType.unserialize_query_value(prop.text, prop['m:type']) : prop['null'] ? nil : ''
+            properties[prop.name] = prop.text != '' ? Azure::Storage::Table::EdmType.unserialize_query_value(prop.text, prop['m:type']) : prop['null'] ? nil : ''
           end
         end
         result[:properties] = properties

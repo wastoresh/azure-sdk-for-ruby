@@ -15,10 +15,10 @@
 require 'cgi'
 require 'azure/core/auth/signer'
 
-module Azure
+module Azure::Storage
   module Core
     module Auth
-      class SharedKey < Signer
+      class SharedKey < Azure::Core::Auth::Signer
         # The Azure account's name.
         attr :account_name
 

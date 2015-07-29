@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 
-module Azure
+module Azure::Storage
   module Blob
     class Container
 

@@ -16,15 +16,15 @@ require "integration/test_helper"
 require "azure_storage/blob/blob_service"
 require "azure_storage/service/signed_identifier"
 
-describe Azure::Blob::BlobService do
-  subject { Azure::Blob::BlobService.new }
+describe Azure::Storage::Blob::BlobService do
+  subject { Azure::Storage::Blob::BlobService.new }
   after { TableNameHelper.clean }
   
   describe '#set/get_container_acl' do
     let(:container_name) { ContainerNameHelper.name }
     let(:public_access_level) { :container.to_s }
     let(:identifiers) {
-      identifier = Azure::Service::SignedIdentifier.new
+      identifier = Azure::Storage::Service::SignedIdentifier.new
       identifier.id = "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="
       identifier.access_policy.start = "2009-09-28T08:49:37.0000000Z"
       identifier.access_policy.expiry = "2009-09-29T08:49:37.0000000Z"

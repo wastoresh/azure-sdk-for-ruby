@@ -18,9 +18,9 @@ require 'azure_storage/table/auth/shared_key'
 require 'azure_storage/table/serialization'
 require 'azure_storage/table/entity'
 
-module Azure
+module Azure::Storage
   module Table
-    class TableService < Azure::Service::StorageService
+    class TableService < Azure::Storage::Service::StorageService
 
       def initialize(options = {})
         client_config = options[:client] || Azure
@@ -49,7 +49,7 @@ module Azure
         query = { }
         query['timeout'] = options[:timeout].to_s if options[:timeout]
 
-        body = Azure::Table::Serialization.hash_to_entry_xml({"TableName" => table_name}).to_xml
+        body = Azure::Storage::Table::Serialization.hash_to_entry_xml({"TableName" => table_name}).to_xml
         call(:post, collection_uri(query), body)
         nil
       end
@@ -95,7 +95,7 @@ module Azure
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         response = call(:get, table_uri(table_name, query))
-        results = Azure::Table::Serialization.hash_from_entry_xml(response.body)
+        results = Azure::Storage::Table::Serialization.hash_from_entry_xml(response.body)
         results[:updated]
       end
 
@@ -123,7 +123,7 @@ module Azure
         uri = collection_uri(query)
 
         response = call(:get, uri)
-        entries = Azure::Table::Serialization.entries_from_feed_xml(response.body) || []
+        entries = Azure::Storage::Table::Serialization.entries_from_feed_xml(response.body) || []
 
         values = Azure::Service::EnumerationResults.new(entries)
         values.continuation_token = response.headers["x-ms-continuation-NextTableName"]
@@ -144,7 +144,7 @@ module Azure
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159100
       #
-      # Returns a list of Azure::Entity::SignedIdentifier instances
+      # Returns a list of Azure::Storage::Entity::SignedIdentifier instances
       def get_table_acl(table_name, options={})
         query = { 'comp' => 'acl'}
         query['timeout'] = options[:timeout].to_s if options[:timeout]
@@ -152,7 +152,7 @@ module Azure
         response = call(:get, generate_uri(table_name, query), nil, {'x-ms-version' => '2012-02-12'})
 
         signed_identifiers = []
-        signed_identifiers = Azure::Table::Serialization.signed_identifiers_from_xml response.body unless response.body == nil or response.body.length < 1
+        signed_identifiers = Azure::Storage::Table::Serialization.signed_identifiers_from_xml response.body unless response.body == nil or response.body.length < 1
         signed_identifiers
       end
 
@@ -166,7 +166,7 @@ module Azure
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:signed_identifiers+  - Array. A list of Azure::Entity::SignedIdentifier instances
+      # * +:signed_identifiers+  - Array. A list of Azure::Storage::Entity::SignedIdentifier instances
       # * +:timeout+             - Integer. A timeout in seconds.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/jj159102
@@ -178,7 +178,7 @@ module Azure
 
         uri = generate_uri(table_name, query)
         body = nil
-        body = Azure::Table::Serialization.signed_identifiers_to_xml options[:signed_identifiers] if options[:signed_identifiers] && options[:signed_identifiers].length > 0
+        body = Azure::Storage::Table::Serialization.signed_identifiers_to_xml options[:signed_identifiers] if options[:signed_identifiers] && options[:signed_identifiers].length > 0
 
         call(:put, uri, body, {'x-ms-version' => '2012-02-12'})
         nil
@@ -200,16 +200,16 @@ module Azure
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179433
       #
-      # Returns a Azure::Entity::Table::Entity
+      # Returns a Azure::Storage::Entity::Table::Entity
       def insert_entity(table_name, entity_values, options={})
-        body = Azure::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
+        body = Azure::Storage::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
 
         query = { }
         query['timeout'] = options[:timeout].to_s if options[:timeout]
 
         response = call(:post, entities_uri(table_name, nil, nil, query), body)
         
-        result = Azure::Table::Serialization.hash_from_entry_xml(response.body)
+        result = Azure::Storage::Table::Serialization.hash_from_entry_xml(response.body)
 
         Entity.new do |entity|
           entity.table = table_name
@@ -254,7 +254,7 @@ module Azure
 
         entities = Azure::Service::EnumerationResults.new
 
-        results = (options[:partition_key] and options[:row_key]) ? [Azure::Table::Serialization.hash_from_entry_xml(response.body)] : Azure::Table::Serialization.entries_from_feed_xml(response.body)
+        results = (options[:partition_key] and options[:row_key]) ? [Azure::Storage::Table::Serialization.hash_from_entry_xml(response.body)] : Azure::Storage::Table::Serialization.entries_from_feed_xml(response.body)
         
         results.each do |result|
           entity = Entity.new do |e|
@@ -307,7 +307,7 @@ module Azure
         headers = {}
         headers["If-Match"] = if_match || "*" unless options[:create_if_not_exists]
 
-        body = Azure::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
+        body = Azure::Storage::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
 
         response = call(:put, uri, body, headers)
         response.headers["etag"]
@@ -345,7 +345,7 @@ module Azure
         headers = { "X-HTTP-Method"=> "MERGE" }
         headers["If-Match"] = if_match || "*" unless options[:create_if_not_exists]
 
-        body = Azure::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
+        body = Azure::Storage::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
 
         response = call(:post, uri, body, headers)
         response.headers["etag"]
@@ -426,7 +426,7 @@ module Azure
       #
       # ==== Attributes
       #
-      # * +batch+         - The Azure::Table::Batch instance to execute.
+      # * +batch+         - The Azure::Storage::Table::Batch instance to execute.
       # * +options+       - Hash. Optional parameters.
       #
       # ==== Options
@@ -466,7 +466,7 @@ module Azure
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+      - Integer. A timeout in seconds.
       #
-      # Returns an Azure::Table::Entity instance on success
+      # Returns an Azure::Storage::Table::Entity instance on success
       def get_entity(table_name, partition_key, row_key, options={})
         options[:partition_key] = partition_key
         options[:row_key] = row_key
@@ -560,4 +560,4 @@ module Azure
   end
 end
 
-Azure::TableService = Azure::Table::TableService
+Azure::Storage::TableService = Azure::Storage::Table::TableService

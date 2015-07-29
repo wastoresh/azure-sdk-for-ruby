@@ -24,7 +24,7 @@ require 'azure_storage/service/retention_policy'
 require 'azure_storage/service/cors'
 require 'azure_storage/service/cors_rule'
 
-module Azure
+module Azure::Storage
   module Service
     module Serialization
       module ClassMethods
@@ -90,7 +90,7 @@ module Azure
           xml = slopify(xml)
           expect_node("EnumerationResults", xml)
 
-          results = results || EnumerationResults.new; 
+          results = results || Azure::Service::EnumerationResults.new; 
 
           results.continuation_token = xml.NextMarker.text if (xml > "NextMarker").any?
           results

@@ -16,9 +16,9 @@ require "integration/test_helper"
 require "azure_storage/table/table_service"
 require "azure/core/http/http_error"
 
-describe Azure::Table::TableService do
+describe Azure::Storage::Table::TableService do
   describe "#insert_entity" do
-    subject { Azure::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.new }
     let(:table_name){ TableNameHelper.name }
 
     let(:entity_properties) {
@@ -29,7 +29,7 @@ describe Azure::Table::TableService do
         "CustomInt32Property" => 37,
         "CustomInt64Property" => 2**32,
         "CustomInt64NegProperty" => -(2**32),
-        "CustomGUIDProperty" => Azure::Table::GUID.new("81425519-6394-43e4-ac6e-28d91f5c3921"),
+        "CustomGUIDProperty" => Azure::Storage::Table::GUID.new("81425519-6394-43e4-ac6e-28d91f5c3921"),
         "CustomStringProperty" => "CustomPropertyValue",
         "CustomBinaryProperty" => "\x01\x02\x03".force_encoding("BINARY"),
         "CustomDateProperty" => Time.now,
@@ -48,7 +48,7 @@ describe Azure::Table::TableService do
 
     it "creates an entity" do 
       result = subject.insert_entity table_name, entity_properties
-      result.must_be_kind_of Azure::Table::Entity
+      result.must_be_kind_of Azure::Storage::Table::Entity
       result.table.must_equal table_name
       entity_properties.each { |k,v|
         if entity_properties[k].class == Time

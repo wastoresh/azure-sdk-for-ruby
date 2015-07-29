@@ -16,7 +16,7 @@ require "integration/test_helper"
 require "azure_storage/blob/blob_service"
 
 describe 'Table GB-18030' do
-  subject { Azure::Table::TableService.new }
+  subject { Azure::Storage::Table::TableService.new }
 
   let(:table_name){ TableNameHelper.name }
 
@@ -218,7 +218,7 @@ describe 'Table GB-18030' do
     GB18030TestStrings.get_xml_10_fourth_ed_identifiers.each { |k,v|
       counter = counter + 1;
       prop = "prop" + v.encode("UTF-8")
-      batch = Azure::Table::Batch.new table_name, "x"
+      batch = Azure::Storage::Table::Batch.new table_name, "x"
       batch.insert k + counter.to_s,       { prop => "value" }
       batch.insert k + counter.to_s + "2", { prop => "value2" }
       results = subject.execute_batch batch
@@ -237,7 +237,7 @@ describe 'Table GB-18030' do
     GB18030TestStrings.get_xml_10_fourth_ed_identifiers.each { |k,v|
       counter = counter + 1;
       prop = "prop" + v.encode("GB18030")
-      batch = Azure::Table::Batch.new table_name, "x"
+      batch = Azure::Storage::Table::Batch.new table_name, "x"
       batch.insert k + counter.to_s,       { prop => "value" }
       batch.insert k + counter.to_s + "2", { prop => "value2" }
       results = subject.execute_batch batch
@@ -256,7 +256,7 @@ describe 'Table GB-18030' do
     GB18030TestStrings.get.each { |k,v|
       value = "value" + v.encode("UTF-8")
       counter = counter + 1;
-      batch = Azure::Table::Batch.new table_name, "x"
+      batch = Azure::Storage::Table::Batch.new table_name, "x"
       batch.insert k + counter.to_s,       { "key" => value }
       batch.insert k + counter.to_s + "2", { "key" => value + "2" }
       results = subject.execute_batch batch
@@ -273,7 +273,7 @@ describe 'Table GB-18030' do
     GB18030TestStrings.get.each { |k,v|
       value = "value" + v.encode("GB18030")
       counter = counter + 1;
-      batch = Azure::Table::Batch.new table_name, "x"
+      batch = Azure::Storage::Table::Batch.new table_name, "x"
       batch.insert k + counter.to_s,       { "key" => value }
       batch.insert k + counter.to_s + "2", { "key" => value + "2" }
       results = subject.execute_batch batch
@@ -290,7 +290,7 @@ describe 'Table GB-18030' do
     GB18030TestStrings.get.each { |k,v|
       value = "value" + v.encode("UTF-8")
       counter = counter + 1;
-      batch = Azure::Table::Batch.new table_name, value
+      batch = Azure::Storage::Table::Batch.new table_name, value
       batch.insert value, { }
       batch.insert value + "2", { }
       results = subject.execute_batch batch
@@ -302,7 +302,7 @@ describe 'Table GB-18030' do
         result.properties["PartitionKey"].encode("UTF-8").must_equal value.encode("UTF-8")
         result.properties["RowKey"].encode("UTF-8").must_equal value.encode("UTF-8")
       end
-      batch = Azure::Table::Batch.new table_name, value
+      batch = Azure::Storage::Table::Batch.new table_name, value
       batch.delete value
       batch.delete value + "2"
       results = subject.execute_batch batch
@@ -324,7 +324,7 @@ describe 'Table GB-18030' do
     GB18030TestStrings.get.each { |k,v|
       value = ("value" + v).encode("GB18030")
       counter = counter + 1;
-      batch = Azure::Table::Batch.new table_name, value
+      batch = Azure::Storage::Table::Batch.new table_name, value
       batch.insert value, { }
       batch.insert value + "2", { }
       results = subject.execute_batch batch
@@ -336,7 +336,7 @@ describe 'Table GB-18030' do
         result.properties["PartitionKey"].encode("UTF-8").must_equal value.encode("UTF-8")
         result.properties["RowKey"].encode("UTF-8").must_equal value.encode("UTF-8")
       end
-      batch = Azure::Table::Batch.new table_name, value
+      batch = Azure::Storage::Table::Batch.new table_name, value
       batch.delete value
       batch.delete value + "2"
       results = subject.execute_batch batch

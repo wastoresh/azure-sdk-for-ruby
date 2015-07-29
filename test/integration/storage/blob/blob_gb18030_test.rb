@@ -16,7 +16,7 @@ require 'integration/test_helper'
 require 'azure_storage/blob/blob_service'
 
 describe 'Blob GB-18030' do
-  subject { Azure::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.new }
   after { ContainerNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }
