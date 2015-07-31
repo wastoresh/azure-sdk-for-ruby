@@ -23,10 +23,10 @@ module Azure::Storage
       # Create a new instance of the StorageService
       #
       # @param signer         [Azure::Core::Auth::Signer] An implementation of Signer used for signing requests.
-      # (optional, Default=Azure::Core::Auth::SharedKey.new)
+      # (optional, Default=Azure::Storage::Auth::SharedKey.new)
       # @param account_name   [String] The account name (optional, Default=Azure.config.storage_account_name)
       # @param options        [Azure::Storage::Configurable] the client configuration context
-      def initialize(signer=Core::Auth::SharedKey.new, account_name=nil, options = {})
+      def initialize(signer=Auth::SharedKey.new, account_name=nil, options = {})
         super(signer, account_name, options)
       end
 

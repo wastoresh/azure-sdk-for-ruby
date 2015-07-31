@@ -14,7 +14,7 @@
 #--------------------------------------------------------------------------
 require 'azure_storage/service/storage_service'
 require 'azure_storage/blob/serialization'
-require 'azure_storage/blob/auth/shared_access_signature'
+require 'azure_storage/auth/shared_access_signature'
 require 'base64'
 
 module Azure::Storage
@@ -23,7 +23,7 @@ module Azure::Storage
 
       def initialize(options = {})
         client_config = options[:client] || Azure
-        signer = options[:signer] || Azure::Storage::Core::Auth::SharedKey.new(client_config.storage_account_name,
+        signer = options[:signer] || Azure::Storage::Auth::SharedKey.new(client_config.storage_account_name,
                                                                       client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options)
         @host = client.storage_blob_host

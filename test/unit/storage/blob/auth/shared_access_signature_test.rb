@@ -13,11 +13,11 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require 'test_helper'
-require 'azure_storage/blob/auth/shared_access_signature'
+require 'azure_storage/auth/shared_access_signature'
 require 'base64'
 require 'uri'
 
-describe Azure::Storage::Blob::Auth::SharedAccessSignature do
+describe Azure::Storage::Auth::SharedAccessSignature do
   let(:path) { 'example/path' }
   let(:options) {
     {
@@ -31,7 +31,7 @@ describe Azure::Storage::Blob::Auth::SharedAccessSignature do
   let(:access_account_name) { 'account-name' }
   let(:access_key_base64) { Base64.strict_encode64('access-key') }
 
-  subject { Azure::Storage::Blob::Auth::SharedAccessSignature.new(access_account_name, access_key_base64) }
+  subject { Azure::Storage::Auth::SharedAccessSignature.new(access_account_name, access_key_base64) }
 
   it 'decodes the base64 encoded access_key' do
     subject.access_key.must_equal 'access-key'

@@ -15,33 +15,31 @@
 require "azure_storage/auth/shared_key"
 
 module Azure::Storage
-  module Core
-    module Auth
-      class SharedKeyLite < SharedKey
-        # The name of the strategy.
-        #
-        # @return [String]
-        def name
-          'SharedKeyLite'
-        end
+  module Auth
+    class SharedKeyLite < SharedKey
+      # The name of the strategy.
+      #
+      # @return [String]
+      def name
+        'SharedKeyLite'
+      end
 
-        # Generate the string to sign.
-        #
-        # @param method     [Symbol] The HTTP request method.
-        # @param uri        [URI] The URI of the request we're signing.
-        # @param headers    [Hash] A Hash of HTTP request headers.
-        #
-        # Returns a plain text string.
-        def signable_string(method, uri, headers)
-          [
-            method.to_s.upcase,
-            headers.fetch('Content-MD5', ''),
-            headers.fetch('Content-Type', ''),
-            headers.fetch('Date') { raise IndexError, 'Headers must include Date' },
-            canonicalized_headers(headers),
-            canonicalized_resource(uri)
-          ].join("\n")
-        end
+      # Generate the string to sign.
+      #
+      # @param method     [Symbol] The HTTP request method.
+      # @param uri        [URI] The URI of the request we're signing.
+      # @param headers    [Hash] A Hash of HTTP request headers.
+      #
+      # Returns a plain text string.
+      def signable_string(method, uri, headers)
+        [
+          method.to_s.upcase,
+          headers.fetch('Content-MD5', ''),
+          headers.fetch('Content-Type', ''),
+          headers.fetch('Date') { raise IndexError, 'Headers must include Date' },
+          canonicalized_headers(headers),
+          canonicalized_resource(uri)
+        ].join("\n")
       end
     end
   end

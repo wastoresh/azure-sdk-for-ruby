@@ -15,8 +15,8 @@
 require 'test_helper'
 require 'azure_storage/auth/shared_key'
 
-describe Azure::Storage::Core::Auth::SharedKey do
-  subject { Azure::Storage::Core::Auth::SharedKey.new 'account-name', 'YWNjZXNzLWtleQ==' }
+describe Azure::Storage::Auth::SharedKey do
+  subject { Azure::Storage::Auth::SharedKey.new 'account-name', 'YWNjZXNzLWtleQ==' }
   
   let(:verb) { 'POST' }
   let(:uri) { URI.parse 'http://dummy.uri/resource' }

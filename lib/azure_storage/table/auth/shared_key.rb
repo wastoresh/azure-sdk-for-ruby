@@ -18,7 +18,7 @@ require 'azure/core/auth/signer'
 module Azure::Storage
   module Table
     module Auth
-      class SharedKey < Azure::Storage::Core::Auth::SharedKey
+      class SharedKey < Azure::Storage::Auth::SharedKey
         # The account name
         attr :account_name
 
