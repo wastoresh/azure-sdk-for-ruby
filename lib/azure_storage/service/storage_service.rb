@@ -15,6 +15,7 @@
 
 require 'azure/core/signed_service'
 require 'azure_storage/core'
+require 'azure_storage/service/storage_service_properties'
 
 module Azure::Storage
   module Service

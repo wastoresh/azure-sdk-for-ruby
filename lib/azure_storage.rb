@@ -16,8 +16,7 @@
 require 'rubygems'
 require 'nokogiri'
 
-require 'azure_storage/core'
-require 'azure_storage/client'
+require 'azure_storage/autoload'
 
 module Azure
   module Storage

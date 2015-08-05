@@ -13,39 +13,14 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 
-require 'rubygems'
-require 'nokogiri'
-require 'base64'
-require 'openssl'
-require 'uri'
-require 'rexml/document'
-require 'addressable/uri'
-require 'faraday'
-require 'faraday_middleware'
-
-require 'azure/autoload'
-
 module Azure
-
-  class << self
-    include Azure::Configurable
-
-    # API client based on configured options {Configurable}
-    #
-    # @return [Azure::Client] API wrapper
-    def client(options = {})
-      @client = Azure::Client.new(options) unless defined?(@client) && @client.same_options?(options)
-      @client
-    end
-
-    private
-
-    def method_missing(method_name, *args, &block)
-      return super unless client.respond_to?(method_name)
-      client.send(method_name, *args, &block)
-    end
-
+  module Core
+    autoload :HttpClient,                     'azure/core/http_client'
+    autoload :Utility,                        'azure/core/utility'
+    autoload :Logger,                         'azure/core/utility'
+    autoload :Error,                          'azure/core/error'
+    autoload :Service,                        'azure/core/service'
+    autoload :FilteredService,                'azure/core/filtered_service'
+    autoload :SignedService,                  'azure/core/signed_service'
   end
-
-  Azure.setup
 end
