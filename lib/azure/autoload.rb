@@ -61,30 +61,6 @@ module Azure
     autoload :SqlServer,                        'azure/sql_database_management/sql_server'
   end
 
-  module Storage
-    
-    module Blob
-      autoload :BlobService,                    'azure_storage/blob/blob_service'
-      autoload :Blob,                           'azure_storage/blob/blob'
-      autoload :Block,                          'azure_storage/blob/block'
-      autoload :Container,                      'azure_storage/blob/container'
-      autoload :Serialization,                  'azure_storage/blob/serialization'
-    end
-
-    module Queue
-      autoload :QueueService,                   'azure_storage/queue/queue_service'
-      autoload :Message,                        'azure_storage/queue/message'
-      autoload :Queue,                          'azure_storage/queue/queue'
-    end
-
-    module Table
-      autoload :TableService,             'azure_storage/table/table_service'
-      autoload :Batch,                    'azure_storage/table/batch'
-      autoload :Query,                    'azure_storage/table/query'
-    end
-
-  end
-
   module StorageManagement
     autoload :StorageManagementService,         'azure/storage_management/storage_management_service'
     autoload :Serialization,                    'azure/storage_management/serialization'

@@ -49,3 +49,8 @@ module Azure
 
   Azure.setup
 end
+
+# alias of storage module
+Azure::Blob = Azure::Storage::Blob
+Azure::Table = Azure::Storage::Table
+Azure::Queue = Azure::Storage::Queue

@@ -22,13 +22,10 @@ module Azure
   module Storage
     class << self
 
+      attr_reader client
+
       def setup(options={})
         @client = Azure::Storage::Client.new(options)
-      end
-
-      def client
-        @client = Azure::Storage::Client.new unless defined? @client
-        @client
       end
 
       private

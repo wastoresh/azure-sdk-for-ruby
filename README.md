@@ -29,6 +29,11 @@ This project provides a Ruby package that makes it easy to access and manage Mic
     * List VNet
     * Create VNet via parameters or xml file
 
+
+# Libraries for specific services
+
+`azure_storage` is the gem specific for Azure Storage Service. Please refer [here](https://github.com/wastoresh/azure-sdk-for-ruby/tree/storage/lib/azure_storage/README.md) for more details.
+
 # Supported Ruby Versions
 
 * Ruby 1.9.3
