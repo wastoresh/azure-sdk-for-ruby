@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 
-require "integration/test_helper"
+require 'integration/storage/test_helper'
 require "azure_storage/table/table_service"
 require "azure/core/http/http_error"
 

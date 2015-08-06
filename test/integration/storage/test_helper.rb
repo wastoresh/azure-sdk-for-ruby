@@ -12,25 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'integration/storage/test_helper'
-require "azure_storage/table/table_service"
-require "azure/core/http/http_error"
+require 'test_helper'
+require 'azure'
 
-describe Azure::Storage::Table::TableService do
-  describe "#create_table" do
-    subject { Azure::Storage::Table::TableService.new }
-    let(:table_name){ TableNameHelper.name }
-    after { TableNameHelper.clean }
-
-    it "creates a table with a valid name" do
-      result = subject.create_table(table_name)
-      result.must_be_nil
-    end
-
-    it "errors on an invalid table name" do
-      assert_raises(Azure::Core::Http::HTTPError) do
-        subject.create_table "this_table.cannot-exist!"
-      end
-    end
-  end
+Azure.configure do |config|
+  config.storage_access_key       = ENV.fetch('AZURE_STORAGE_ACCESS_KEY')
+  config.storage_account_name     = ENV.fetch('AZURE_STORAGE_ACCOUNT')
 end
+
+util = Class.new.extend(Azure::Core::Utility)
+
+StorageAccountName = util.random_string('storagetest',10)

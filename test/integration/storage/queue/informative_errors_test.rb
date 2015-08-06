@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require "integration/test_helper"
+require 'integration/storage/test_helper'
 require "azure_storage/blob/blob_service"
 require "azure/core/http/http_error"
 
-require "integration/test_helper"
+require 'integration/storage/test_helper'
 require "azure_storage/queue/queue_service"
 require "azure/core/http/http_error"
 
