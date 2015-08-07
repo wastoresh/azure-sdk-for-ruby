@@ -104,6 +104,34 @@ namespace :test do
     component_task :vnet
   end
 
+  namespace :storage do
+
+    Rake::TestTask.new :unit do |t|
+      t.pattern = 'test/unit/storage/**/*_test.rb'
+      t.verbose = true
+      t.libs = %w(lib test)
+    end
+
+    task :require_storage_env => :dotenv do
+      unset_environment = [
+        ENV.fetch('AZURE_STORAGE_ACCOUNT',  nil),
+        ENV.fetch('AZURE_STORAGE_ACCESS_KEY',    nil),
+      ].include?(nil)
+
+      abort '[ABORTING] Configure your environment to run the storage integration tests' if unset_environment
+    end
+
+
+    Rake::TestTask.new :integration do |t|
+      t.pattern = 'test/integration/storage/**/*_test.rb'
+      t.verbose = true
+      t.libs = %w(lib test)
+    end
+
+    task :integration => :require_storage_env
+
+  end
+
   task :cleanup => :require_environment do
     $:.unshift 'lib'
     require 'azure'

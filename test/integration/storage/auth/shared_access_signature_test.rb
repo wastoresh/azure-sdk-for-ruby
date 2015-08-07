@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
+require 'integration/storage/test_helper'
+require 'azure_storage/auth/signed_access_signature'
 
+describe Azure::Storage::Auth::SharedAccessSignature
 
-require 'azure_storage/auth/shared_access_signature_generator'
-require 'azure_storage/auth/shared_access_signature_signer'
+end

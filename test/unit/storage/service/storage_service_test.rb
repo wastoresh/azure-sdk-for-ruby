@@ -22,7 +22,7 @@ describe Azure::Storage::Service::StorageService do
 
   let(:uri) { URI.parse 'http://dummy.uri/resource' }
   let(:verb) { :get }
-  let(:x_ms_version) {'2014-02-14'}
+  let(:x_ms_version) { Azure::Storage::Default::STG_VERSION }
   let(:user_agent) { Azure::Storage::Default::USER_AGENT }
 
   subject do

@@ -14,6 +14,7 @@
 #--------------------------------------------------------------------------
 
 require 'ipaddr'
+require 'azure/core/error'
 
 if RUBY_VERSION.to_f < 2.0
   begin

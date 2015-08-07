@@ -72,7 +72,7 @@ module Azure::Storage
           method.to_s.upcase,
           headers.fetch('Content-Encoding', ''),
           headers.fetch('Content-Language', ''),
-          headers.fetch('Content-Length', ''),
+          headers.fetch('Content-Length', '').sub(/^0+/,''), # from 2015-02-21, if Content-Length == 0, it won't be signed
           headers.fetch('Content-MD5', ''),
           headers.fetch('Content-Type', ''),
           headers.fetch('Date', ''),

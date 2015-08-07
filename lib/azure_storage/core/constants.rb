@@ -21,7 +21,7 @@ module Azure::Storage
     USER_AGENT = "Ruby #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}; AzureStorage/#{Azure::Storage::Version}".freeze
 
     # Default REST service (STG) version number
-    STG_VERSION = '2014-02-14'
+    STG_VERSION = '2015-02-21'
 
     # The number of default concurrent requests for parallel operation.
     DEFAULT_PARALLEL_OPERATION_THREAD_COUNT = 1
