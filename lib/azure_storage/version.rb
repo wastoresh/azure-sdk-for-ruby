@@ -26,6 +26,10 @@ module Azure
         def to_s
           [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
         end
+
+        def to_uas
+          [MAJOR, MINOR, UPDATE].join('.') + (PRE.empty? ? '' : '-preview')
+        end
       end
     end
   end

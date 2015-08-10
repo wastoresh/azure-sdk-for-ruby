@@ -18,7 +18,7 @@ require 'azure_storage/version'
 module Azure::Storage
   module Default
     # Default User Agent header string
-    USER_AGENT = "Ruby #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}; AzureStorage/#{Azure::Storage::Version}".freeze
+    USER_AGENT = "Azure-Storage/#{Azure::Storage::Version.to_uas} (Ruby #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})".freeze
 
     # Default REST service (STG) version number
     STG_VERSION = '2015-02-21'
