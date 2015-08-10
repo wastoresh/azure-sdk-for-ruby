@@ -17,7 +17,7 @@ require 'azure_storage/core'
 require 'azure_storage/core/client_options_error'
 require 'azure/core/auth/signer'
 require 'time'
-require 'URI'
+require 'uri'
 
 # @see https://msdn.microsoft.com/library/azure/dn140255.aspx for more information on construction
 module Azure::Storage
