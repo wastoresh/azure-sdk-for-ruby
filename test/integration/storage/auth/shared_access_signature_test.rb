@@ -13,8 +13,8 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require 'integration/storage/test_helper'
-require 'azure_storage/auth/signed_access_signature'
+require 'azure_storage/auth/shared_access_signature'
 
-describe Azure::Storage::Auth::SharedAccessSignature
+describe Azure::Storage::Auth::SharedAccessSignature do
 
 end

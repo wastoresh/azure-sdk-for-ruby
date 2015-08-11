@@ -13,13 +13,8 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require 'test_helper'
-require 'azure'
+require 'azure_storage'
 
-Azure.configure do |config|
-  config.storage_access_key       = ENV.fetch('AZURE_STORAGE_ACCESS_KEY')
-  config.storage_account_name     = ENV.fetch('AZURE_STORAGE_ACCOUNT')
-end
+Azure::Storage.setup
 
 util = Class.new.extend(Azure::Core::Utility)
-
-StorageAccountName = util.random_string('storagetest',10)

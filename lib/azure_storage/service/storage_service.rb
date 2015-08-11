@@ -28,6 +28,7 @@ module Azure::Storage
       # @param account_name   [String] The account name (optional, Default=Azure.config.storage_account_name)
       # @param options        [Azure::Storage::Configurable] the client configuration context
       def initialize(signer=Auth::SharedKey.new, account_name=nil, options = {})
+        
         super(signer, account_name, options)
       end
 

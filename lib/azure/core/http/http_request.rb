@@ -19,6 +19,7 @@ require 'time'
 
 require 'azure/version'
 require 'azure/core/http/http_response'
+require 'azure/default'
 
 module Azure
   module Core

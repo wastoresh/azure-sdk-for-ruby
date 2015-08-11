@@ -23,7 +23,7 @@ module Azure::Storage
     class TableService < Azure::Storage::Service::StorageService
 
       def initialize(options = {})
-        client_config = options[:client] || Azure
+        client_config = options[:client] = options[:client] || Azure::Storage.client
         signer = options[:signer] || Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options)
         @host = client.storage_table_host

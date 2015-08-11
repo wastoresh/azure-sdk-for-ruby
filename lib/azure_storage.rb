@@ -15,6 +15,13 @@
 
 require 'rubygems'
 require 'nokogiri'
+require 'base64'
+require 'openssl'
+require 'uri'
+require 'rexml/document'
+require 'addressable/uri'
+require 'faraday'
+require 'faraday_middleware'
 
 require 'azure_storage/autoload'
 
